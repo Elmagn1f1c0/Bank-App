@@ -1,0 +1,97 @@
+﻿@model BankApp.Models.RegisterNewAccountModel
+
+<form asp-action="CreateAccount">
+    <br />
+    <div class="container border p-3">
+        <h1 class="text-primary">Create Account</h1>
+        <hr />
+
+        <div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="col-2">
+                <label asp-for="FirstName" class="control-label pt-2" style="font-size:20px;"></label>
+
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+
+            </div>
+            <div class="col-2">
+                <label asp-for="LastName" class="control-label pt-2" style="font-size:20px;"></label>
+
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+
+            </div>
+            <div class="col-2">
+                <label asp-for="PhoneNumber" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="col-2">
+                <label asp-for="Email" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Email" class="form-control" rows="5" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            
+            <div class="col-2">
+                <label asp-for="AccountType" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                @Html.DropDownListFor(model => model.AccountType, new SelectList(
+                new List<string> { "Savings", "Current", "Corporate", "Government" }), new { @class = "form-control" })
+                <span asp-validation-for="AccountType" class="text-danger"></span>
+            </div>
+
+
+            <div class="col-2">
+                <label asp-for="DateCreated" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="DateCreated" class="form-control" />
+                <span asp-validation-for="DateCreated" class="text-danger"></span>
+            </div>
+            <div class="col-2">
+                <label asp-for="DateLastUpdated" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="DateLastUpdated" class="form-control" />
+                <span asp-validation-for="DateLastUpdated" class="text-danger"></span>
+            </div>
+            <div class="col-2">
+                <label asp-for="Pin" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Pin" class="form-control" />
+                <span asp-validation-for="Pin"   class="text-danger"></span>
+            </div>
+            <div class="col-2">
+                <label asp-for="ConfirmPin" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="ConfirmPin" class="form-control" />
+                <span asp-validation-for="ConfirmPin" class="text-danger"></span>
+            </div>
+            <div class="col-5 offset-2">
+                <a asp-action="AccountIndex" asp-controller="Account" class="btn-primary btn form-control">Back to List</a>
+            </div>
+            <div class="col-5">
+                <input type="submit" value="Create" class="btn btn-success btn form-control" />
+            </div>
+
+        </div>
+    </div>
+
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

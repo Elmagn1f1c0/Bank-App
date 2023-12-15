@@ -24,6 +24,53 @@ namespace BankApp.Controllers
             var cleanAccounts = _mapper.Map<IList<GetAccountModel>>(accounts);
             return View(cleanAccounts);
         }
+        public IActionResult Search(string searchString)
+        {
+            if (string.IsNullOrEmpty(searchString))
+            {
+                return RedirectToAction(nameof(AccountIndex));
+            }
+
+            var accounts = _service.GetAllAccounts();
+
+            if (accounts == null)
+            {
+                return BadRequest("It can't be empty");
+            }
+
+            searchString = searchString.ToLower();
+
+            var searchResults = accounts
+                .Where(account =>
+                    account.AccountName.ToLower().Contains(searchString) ||
+                    account.FirstName.ToLower().Contains(searchString) ||
+                    account.LastName.ToLower().Contains(searchString) ||
+                    account.AccountType.ToString().ToLower() == searchString ||
+                    account.PhoneNumber.Contains(searchString) ||
+                    account.AccountNumberGenerated.Contains(searchString))
+                .Select(account => new GetAccountModel
+                {
+                    Id = account.Id,
+                    FirstName = account.FirstName,
+                    LastName = account.LastName,
+                    AccountName = account.AccountName,
+                    PhoneNumber = account.PhoneNumber,
+                    Email = account.Email,
+                    CurrentAccountBalance = account.CurrentAccountBalance,
+                    AccountType = account.AccountType,
+                    AccountNumberGenerated = account.AccountNumberGenerated,
+                    DateCreated = account.DateCreated,
+                    DateLastUpdated = account.DateLastUpdated
+                })
+                .ToList();
+
+            if (searchResults.Count > 0)
+            {
+                return View("AccountIndex", searchResults);
+            }
+
+            return View("AccountIndex", new List<GetAccountModel>());
+        }
 
         public async Task<IActionResult> CreateAccount()
         {

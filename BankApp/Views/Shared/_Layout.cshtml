@@ -19,15 +19,21 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                       @*  <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
+                        </li> *@
+                        <li class="nav-item d-flex justify-content-end">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="AccountIndex">Account</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item d-flex justify-content-end">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Transaction" asp-action="TransactionIndex">Transaction</a>
                         </li>
+                        <form class="form" asp-controller="Account" asp-action="Search">
+                            <div class="d-flex justify-content-end">
+                                <input name="searchString" type="text" class="form-control" placeholder="Search for an account..." aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
+                            </div>
+                        </form>
                     </ul>
                 </div>
             </div>

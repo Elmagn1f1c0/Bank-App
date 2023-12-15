@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BankApp.Models.GetAccountModel>
+﻿@model BankApp.DTO.PaginatedList<BankApp.Models.GetAccountModel>
+
 
 <br />
 <div class="container p-4 border">
@@ -41,9 +42,9 @@
             </tr>
         </thead>
         <tbody>
-            @if (Model != null)
+            @if (Model != null && Model.Items.Any())
             {
-                @foreach (var item in Model)
+                @foreach (var item in Model.Items)
                 {
                     <tr>
                         <td>@item.FirstName</td>
@@ -56,10 +57,31 @@
                         <td>
                             <a asp-controller="Account" asp-action="UpdateAccount" asp-route-Id="@item.Id" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
                             <a asp-controller="Account" asp-action="DeleteAccount" asp-route-Id="@item.Id" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
+
+
                         </td>
                     </tr>
                 }
             }
         </tbody>
+        @if (Model != null && Model.TotalPages > 1)
+        {
+            <tfoot>
+                <tr>
+                    <td colspan="8">
+                        <nav aria-label="Transaction navigation">
+                            <ul class="pagination justify-content-center">
+                                @for (var i = 1; i <= Model.TotalPages; i++)
+                                {
+                                    <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                                        <a class="page-link" href="?page=@i">@i</a>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                    </td>
+                </tr>
+            </tfoot>
+        }
     </table>
 </div>

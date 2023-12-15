@@ -13,17 +13,45 @@ namespace BankApp.Controllers
         private readonly IAccountService _service;
         protected Response _response;
         private readonly IMapper _mapper;
+        
         public AccountController(IAccountService service, IMapper mapper)
         {
             _service = service;
             _mapper = mapper;
         }
-        public IActionResult AccountIndex()
+        //public IActionResult AccountIndex()
+        //{
+        //    var accounts = _service.GetAllAccounts();
+        //    var cleanAccounts = _mapper.Map<IList<GetAccountModel>>(accounts);
+        //    return View(cleanAccounts);
+        //}
+        public IActionResult AccountIndex(int page = 1)
         {
+            const int PageSize = 5; 
             var accounts = _service.GetAllAccounts();
-            var cleanAccounts = _mapper.Map<IList<GetAccountModel>>(accounts);
-            return View(cleanAccounts);
+
+            if (accounts != null && accounts.Any())
+            {
+                var accountModels = _mapper.Map<List<GetAccountModel>>(accounts);
+
+                var paginatedAccounts = accountModels
+                    .Skip((page - 1) * PageSize)
+                    .Take(PageSize)
+                    .ToList();
+
+                var totalAccountsCount = accountModels.Count;
+                var model = new PaginatedList<GetAccountModel>(paginatedAccounts, totalAccountsCount, page, PageSize);
+                return View(model);
+            }
+            else
+            {
+                var emptyList = new PaginatedList<GetAccountModel>(new List<GetAccountModel>(), 0, 1, PageSize);
+                return View(emptyList);
+            }
         }
+
+
+
         public IActionResult Search(string searchString)
         {
             if (string.IsNullOrEmpty(searchString))

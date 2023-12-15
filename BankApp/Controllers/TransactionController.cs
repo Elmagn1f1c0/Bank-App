@@ -10,22 +10,30 @@ namespace BankApp.Controllers
     {
         private readonly ITransactionService _service;
         IMapper _mapper;
+        private const int PageSize = 5;
 
         public TransactionController(ITransactionService service, IMapper mapper)
         {
             _service = service;
             _mapper = mapper;
         }
-        public IActionResult TransactionIndex()
+        public IActionResult TransactionIndex(int page = 1)
         {
             var transactionsResponse = _service.GetAll();
+
             if (transactionsResponse.ResponseCode == "00" && transactionsResponse.Data is List<Transaction> transactions)
             {
-                return View(transactions);
+                var paginatedTransactions = transactions
+                    .Skip((page - 1) * PageSize)
+                    .Take(PageSize)
+                    .ToList();
+
+                var model = new PaginatedList<Transaction>(paginatedTransactions, transactions.Count, page, PageSize);
+                return View(model);
             }
             else
             {
-                var emptyList = new List<Transaction>(); 
+                var emptyList = new PaginatedList<Transaction>(new List<Transaction>(), 0, 1, PageSize);
                 return View(emptyList);
             }
         }

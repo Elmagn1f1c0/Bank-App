@@ -2,9 +2,7 @@
 using BankApp.DTO;
 using BankApp.Models;
 using BankApp.Services.Interface;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace BankApp.Controllers
 {
@@ -19,12 +17,6 @@ namespace BankApp.Controllers
             _service = service;
             _mapper = mapper;
         }
-        //public IActionResult AccountIndex()
-        //{
-        //    var accounts = _service.GetAllAccounts();
-        //    var cleanAccounts = _mapper.Map<IList<GetAccountModel>>(accounts);
-        //    return View(cleanAccounts);
-        //}
         public IActionResult AccountIndex(int page = 1)
         {
             const int PageSize = 5; 
@@ -107,26 +99,43 @@ namespace BankApp.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateAccount(RegisterNewAccountModel model)
+        public async Task<IActionResult> CreateAccount(RegisterNewAccountModel model)
         {
-                var respone = new Response();
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(model);
-                }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(model);
+            }
 
+            try
+            {
                 var account = _mapper.Map<Account>(model);
-                var result = _service.CreateAccount(account, model.Pin, model.ConfirmPin);
+                var result = await _service.Create(account, model.Pin, model.ConfirmPin);
 
-                if (result != null)
+                if (result.ResponseCode == "EmailExists")
+                {
+                    ModelState.AddModelError("Email", "Email already in use");
+                }
+                else if (result.ResponseCode == "PhoneNumberExists")
+                {
+                    ModelState.AddModelError("PhoneNumber", "Phone number already in use");
+                }
+                else if (result.ResponseCode == "PinsDoNotMatch")
+                {
+                    ModelState.AddModelError(string.Empty, "Pins do not match");
+                }
+                else if (result.ResponseCode == "Success")
                 {
                     return RedirectToAction(nameof(AccountIndex));
                 }
 
                 return View(model);
-           
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View(model);
+            }
         }
-
 
 
         public async Task<IActionResult> UpdateAccount(int id)
@@ -149,23 +158,39 @@ namespace BankApp.Controllers
 
             return View(updateModel); 
         }
-
-
         [HttpPost]
         public async Task<IActionResult> UpdateAccount(UpdateAccountModel model)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                ModelState.AddModelError(string.Empty, "Phone number or email already exists.");
-                return View(model);
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                var account = _mapper.Map<Account>(model);
+
+                var updateResult = await _service.Update(account);
+
+                if (updateResult.ResponseCode == "EmailExists")
+                {
+                    ModelState.AddModelError("Email", "Email already in use");
+                    return View(model);
+                }
+                else if (updateResult.ResponseCode == "PhoneNumberExist")
+                {
+                    ModelState.AddModelError("PhoneNumber", "Phone number already in use");
+                    return View(model);
+                }
+
+                return RedirectToAction(nameof(AccountIndex));
             }
-
-            var account = _mapper.Map<Account>(model);
-
-            await _service.Update(account);
-
-            return RedirectToAction(nameof(AccountIndex));
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while updating the account: " + ex.Message);
+            }
         }
+
 
         public async Task<IActionResult> DeleteAccount(int Id)
         {

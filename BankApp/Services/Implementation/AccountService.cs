@@ -1,4 +1,5 @@
-﻿using BankApp.Models;
+﻿using BankApp.DTO;
+using BankApp.Models;
 using BankApp.Repository.AccountRepository;
 using BankApp.Services.Interface;
 
@@ -17,7 +18,7 @@ namespace BankApp.Services.Implementation
             return _repo.Authenticate(AccountNumber, Pin);
         }
 
-        public Account CreateAccount(Account account, string Pin, string ConfirmPin)
+        public Task<Response> Create(Account account, string Pin, string ConfirmPin)
         {
             return _repo.Create(account, Pin, ConfirmPin);
         }
@@ -42,9 +43,9 @@ namespace BankApp.Services.Implementation
             return _repo.GetById(Id);
         }
 
-        public async Task Update(Account account, string Pin = null)
+        public async Task<Response> Update(Account account, string Pin = null)
         {
-            await _repo.Update(account, Pin);
+            return await _repo.Update(account, Pin);
         }
     }
 }

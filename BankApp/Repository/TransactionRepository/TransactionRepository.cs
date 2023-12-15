@@ -152,7 +152,7 @@ namespace BankApp.Repository.TransactionRepository
                 if (!Regex.IsMatch(AccountNumber, @"^[0][1-9]\d{9}$|^[1-9]\d{9}$"))
                 {
                     //return NotFound("Account Number must be 10-digit");
-                    response.ResponseCode = "404"; // Use a specific code for invalid deposit amount
+                    response.ResponseCode = "404"; 
                     response.ResponseMessage = "Account Number must be 10-digit";
                     response.Data = null;
 
@@ -160,7 +160,7 @@ namespace BankApp.Repository.TransactionRepository
                 if (Amount > int.MaxValue)
                 {
                     //return BadRequest("Amount is too large. Please enter a smaller amount.");
-                    response.ResponseCode = "404"; // Use a specific code for invalid deposit amount
+                    response.ResponseCode = "404"; 
                     response.ResponseMessage = "Amount is too large. Please enter a smaller amount.";
                     response.Data = null;
 
@@ -178,14 +178,14 @@ namespace BankApp.Repository.TransactionRepository
                 if (Amount <= 0)
                 {
                     transaction.TransactionStatus = TranStatus.Failed;
-                    response.ResponseCode = "04"; // Use a specific code for invalid deposit amount
+                    response.ResponseCode = "04"; 
                     response.ResponseMessage = "Invalid deposit amount";
                     response.Data = null;
                 }
                 else if (Amount > currentBalance)
                 {
                     transaction.TransactionStatus = TranStatus.Failed;
-                    response.ResponseCode = "05"; // Use a specific code for insufficient balance for deposit
+                    response.ResponseCode = "05"; 
                     response.ResponseMessage = "Insufficient balance for deposit";
                     response.Data = null;
                 }

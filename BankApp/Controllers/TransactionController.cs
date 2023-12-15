@@ -48,27 +48,41 @@ namespace BankApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult MakeDeposit(string AccountNumber, decimal Amount, string TransactionPin)
         {
+            try
+            {
+                Response response = _service.MakeDeposit(AccountNumber, Amount, TransactionPin);
 
-            Response response = _service.MakeDeposit(AccountNumber, Amount, TransactionPin);
+                if (response.ResponseCode == "03")
+                {
+                    //return BadRequest("Invalid username or pin");
+                    ModelState.AddModelError(string.Empty, "Invalid username or pin");
+                    return View();
+                }
+                else if (response.ResponseCode == "05")
+                {
+                    // return BadRequest("Insufficient balance for deposit");
+                    ModelState.AddModelError(string.Empty, "Insufficient balance for deposit");
+                    return View();
+                }
 
-            if (response.ResponseCode == "03")
-            {
-                return BadRequest("Invalid username or pin");
-            }
-            else if (response.ResponseCode == "05")
-            {
-                return BadRequest("Insufficient balance for deposit");
-            }
+                if (response != null)
+                {
+                    return RedirectToAction("TransactionIndex");
+                }
+                else
+                {
 
-            if (response != null)
+                    ModelState.AddModelError(string.Empty, "Failed to make a deposit.");
+                    return View();
+                }
+            }catch (Exception ex)
             {
-                return RedirectToAction("TransactionIndex");
-            }
-            else
-            {
-               
-                ModelState.AddModelError(string.Empty, "Failed to make a deposit.");
-                return View();
+                if (ex.Message.Contains("Deposit amount should not be within the deposit range"))
+                {
+                    ModelState.AddModelError("Deposit", "Deposit amount should not be within the deposit range");
+                    return BadRequest(ModelState);
+                }
+                return StatusCode(500, "An error occurred while creating the account");
             }
             
         }
@@ -83,28 +97,43 @@ namespace BankApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult MakeTransfer(string FromAccount, string ToAccount, decimal Amount, string TransactionPin)
         {
-
-            Response response = _service.MakeFundsTransfer(FromAccount, ToAccount,Amount, TransactionPin);
-
-            if (response.ResponseCode == "03")
+            try
             {
-                return BadRequest("Invalid username or pin");
-            }
-            else if (response.ResponseCode == "05")
+                Response response = _service.MakeFundsTransfer(FromAccount, ToAccount, Amount, TransactionPin);
+
+                if (response.ResponseCode == "03")
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid username or pin");
+                    return View();
+                }
+                else if (response.ResponseCode == "05")
+                {
+                    //return BadRequest("Insufficient balance for transfer");
+                    ModelState.AddModelError(string.Empty, "Insufficient balance for transfer");
+                    return View();
+                }
+
+                if (response != null)
+                {
+                    return RedirectToAction("TransactionIndex");
+                }
+                else
+                {
+
+                    ModelState.AddModelError(string.Empty, "Failed to make a transfer.");
+                    return View();
+                }
+            }catch (Exception ex)
             {
-                return BadRequest("Insufficient balance for deposit");
+                if (ex.Message.Contains("Transfer amount should not be within the certain range"))
+                {
+                    ModelState.AddModelError("Transfer", "Transfer amount should not be within the deposit range");
+                    return BadRequest(ModelState);
+                }
+                return StatusCode(500, "An error occurred while creating the account");
             }
 
-            if (response != null)
-            {
-                return RedirectToAction("TransactionIndex");
-            }
-            else
-            {
-
-                ModelState.AddModelError(string.Empty, "Failed to make a transfer.");
-                return View();
-            }
+            
 
         }
         public async Task<IActionResult> MakeWithdrawal()
@@ -118,28 +147,44 @@ namespace BankApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult MakeWithdrawal(string AccountNumber, decimal Amount, string TransactionPin)
         {
-
-            Response response = _service.MakeWithdrawal(AccountNumber, Amount, TransactionPin);
-
-            if (response.ResponseCode == "03")
+            try
             {
-                return BadRequest("Invalid username or pin");
-            }
-            else if (response.ResponseCode == "05")
+                Response response = _service.MakeWithdrawal(AccountNumber, Amount, TransactionPin);
+
+                if (response.ResponseCode == "03")
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid username or pin");
+                    return View();
+                }
+                else if (response.ResponseCode == "05")
+                {
+                    //return BadRequest("Insufficient balance for withdrawal");
+                    ModelState.AddModelError(string.Empty, "Insufficient balance for withdrawal");
+                    return View();
+                }
+
+                if (response != null)
+                {
+                    return RedirectToAction("TransactionIndex");
+                }
+                else
+                {
+
+                    ModelState.AddModelError(string.Empty, "Failed to make a withdrawal.");
+                    return View();
+                }
+
+            }catch (Exception ex)
             {
-                return BadRequest("Insufficient balance for deposit");
+                if (ex.Message.Contains("Withdrawal amount should not be within the certain range"))
+                {
+                    ModelState.AddModelError("Withdrawal", "Withdrawal amount should not be within the deposit range");
+                    return BadRequest(ModelState);
+                }
+                return StatusCode(500, "An error occurred while creating the account");
             }
 
-            if (response != null)
-            {
-                return RedirectToAction("TransactionIndex");
-            }
-            else
-            {
 
-                ModelState.AddModelError(string.Empty, "Failed to make a withdrawal.");
-                return View();
-            }
 
         }
         public async Task<IActionResult> DeleteTransaction(int Id)
@@ -171,7 +216,6 @@ namespace BankApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "Phone number or email already exists.");
                 return View(model);
             }
 

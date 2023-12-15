@@ -40,29 +40,43 @@ namespace BankApp.Repository.AccountRepository
             return true;
         }
 
-        public Account Create(Account account, string Pin, string ConfirmPin)
+        public async Task<Response> Create(Account account, string Pin, string ConfirmPin)
         {
             var response = new Response();
-            if (_db.Accounts.Any(x => x.Email == account.Email))
+
+            if (!string.IsNullOrWhiteSpace(account.Email))
             {
-                response.ResponseCode = "EmailExists";
-                response.ResponseMessage = "Email already exists in the database.";
-                response.Data = null;
-                //throw new ApplicationException("An account already exists with this email");
-            }
-            if (_db.Accounts.Any(x => x.PhoneNumber == account.PhoneNumber))
-            {
-                //throw new ApplicationException("An account already exists with this phone number");
-                response.ResponseCode = "PhoneNumber Exist";
-                response.ResponseMessage = "Phone Number already exists in the database.";
-                response.Data = null;
+                var existingAccountWithEmail = _db.Accounts.FirstOrDefault(x => x.Email == account.Email && x.Id != account.Id);
+                if (existingAccountWithEmail != null)
+                {
+                    response.ResponseCode = "EmailExists";
+                    response.ResponseMessage = "Email already exists in the database.";
+                    response.Data = null;
+                    return response; 
+                }
             }
 
-            if (!Pin.Equals(ConfirmPin)) throw new ArgumentException("Pins do not match", "Pin");
+            if (!string.IsNullOrWhiteSpace(account.PhoneNumber))
+            {
+                var existingAccountWithPhoneNumber = _db.Accounts.FirstOrDefault(x => x.PhoneNumber == account.PhoneNumber && x.Id != account.Id);
+                if (existingAccountWithPhoneNumber != null)
+                {
+                    response.ResponseCode = "PhoneNumberExists";
+                    response.ResponseMessage = "Phone Number already exists in the database.";
+                    response.Data = null;
+                    return response; 
+                }
+            }
 
+            if (!Pin.Equals(ConfirmPin))
+            {
+                response.ResponseCode = "PinsDoNotMatch";
+                response.ResponseMessage = "Pins do not match.";
+                response.Data = null;
+                return response;
+            }
 
-            //Now that all validation passes, let us create account
-            //we re hashing/encrypting pin first 
+            // Hashing/encrypting pin
             byte[] pinHash, pinSalt;
             CreatePinHash(Pin, out pinHash, out pinSalt);
 
@@ -70,10 +84,15 @@ namespace BankApp.Repository.AccountRepository
             account.PinSalt = pinSalt;
 
             _db.Accounts.Add(account);
-            _db.SaveChanges();
-            return account;
+            await _db.SaveChangesAsync(); // Use async SaveChanges
 
+            response.ResponseCode = "Success";
+            response.ResponseMessage = "Account created successfully.";
+            response.Data = account; // Set account as data in the response
+            return response; // Return the response object with account data
         }
+
+
         private static void CreatePinHash(string pin, out byte[] pinHash, out byte[] pinSalt)
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA512())
@@ -122,7 +141,7 @@ namespace BankApp.Repository.AccountRepository
 
             return account;
         }
-        public async Task Update(Account account, string Pin = null)
+        public async Task<Response> Update(Account account, string Pin = null)
         {
             var response = new Response();
             var accountToBeUpdated = _db.Accounts.Find(account.Id);
@@ -133,11 +152,13 @@ namespace BankApp.Repository.AccountRepository
 
             if (!string.IsNullOrWhiteSpace(account.Email))
             {
-                if (_db.Accounts.Any(x => x.Email == account.Email && x.Id != account.Id))
+                var existingAccountWithEmail = _db.Accounts.FirstOrDefault(x => x.Email == account.Email && x.Id != account.Id);
+                if (existingAccountWithEmail != null)
                 {
                     response.ResponseCode = "EmailExists";
                     response.ResponseMessage = "Email already exists in the database.";
                     response.Data = null;
+                    return response;
                 }
 
                 accountToBeUpdated.Email = account.Email;
@@ -145,11 +166,13 @@ namespace BankApp.Repository.AccountRepository
 
             if (!string.IsNullOrWhiteSpace(account.PhoneNumber))
             {
-                if (_db.Accounts.Any(x => x.PhoneNumber == account.PhoneNumber && x.Id != account.Id))
+                var existingAccountWithPhoneNumber = _db.Accounts.FirstOrDefault(x => x.PhoneNumber == account.PhoneNumber && x.Id != account.Id);
+                if (existingAccountWithPhoneNumber != null)
                 {
                     response.ResponseCode = "PhoneNumberExist";
                     response.ResponseMessage = "Phone number already exists in the database.";
                     response.Data = null;
+                    return response;
                 }
 
                 accountToBeUpdated.PhoneNumber = account.PhoneNumber;
@@ -166,6 +189,7 @@ namespace BankApp.Repository.AccountRepository
 
             _db.Accounts.Update(accountToBeUpdated);
             await _db.SaveChangesAsync();
+            return response;
         }
 
 

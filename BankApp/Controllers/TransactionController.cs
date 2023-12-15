@@ -99,6 +99,41 @@ namespace BankApp.Controllers
             }
 
         }
+        public async Task<IActionResult> MakeWithdrawal()
+        {
+
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult MakeWithdrawal(string AccountNumber, decimal Amount, string TransactionPin)
+        {
+
+            Response response = _service.MakeWithdrawal(AccountNumber, Amount, TransactionPin);
+
+            if (response.ResponseCode == "03")
+            {
+                return BadRequest("Invalid username or pin");
+            }
+            else if (response.ResponseCode == "05")
+            {
+                return BadRequest("Insufficient balance for deposit");
+            }
+
+            if (response != null)
+            {
+                return RedirectToAction("TransactionIndex");
+            }
+            else
+            {
+
+                ModelState.AddModelError(string.Empty, "Failed to make a withdrawal.");
+                return View();
+            }
+
+        }
         public async Task<IActionResult> DeleteTransaction(int Id)
         {
 

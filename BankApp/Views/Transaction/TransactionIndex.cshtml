@@ -1,0 +1,63 @@
+﻿@model List<Transaction>
+
+<br />
+<div class="container p-4 border">
+    <div class="row pb-2">
+        <div class="col">
+            <h1 class="text-primary">Transaction List</h1>
+        </div>
+        <div class="col text-end pt-1">
+            <a asp-controller="Transaction" asp-action="MakeDeposit" class="btn btn-outline-primary"><i class="bi bi-plus-square-fill"></i>Make Deposit</a>
+
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Transaction Amount
+                </th> 
+                <th>
+                    TransactionUnique Reference
+                </th>
+                <th>
+                    Transaction Source Account
+                </th>
+                <th>
+                    Transaction Type
+                </th>
+                <th>
+                    Transaction Status
+                </th>
+                <th>
+
+                    Transaction Destination Amount
+                </th>
+                <th>
+                    Transaction Date
+                </th>
+
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+             @if (Model != null)
+            {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.TransactionAmount</td>
+                    <td>@item.TransactionUniqueReference</td>
+                    <td>@item.TransactionSourceAccount</td>
+                    <td>@item.TransactionType</td>
+                    <td>@item.TransactionStatus</td>
+                    <td>@item.TransactionDestinationAccount</td>
+                    <td>@item.TransactionDate</td>
+                </tr>
+                 }
+            }
+        </tbody>
+    </table>
+</div>

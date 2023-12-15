@@ -13,7 +13,7 @@ namespace BankApp.Profiles
             CreateMap<Account, GetAccountModel>();
             CreateMap<AccountDTO, Account>();
             CreateMap<TransactionRequest, Transaction>();
-            
+            CreateMap<MakeDepositDTO, Transaction>();
         }
     }
 }

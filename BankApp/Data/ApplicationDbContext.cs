@@ -24,6 +24,20 @@ namespace BankApp.Data
             // Other configurations...
 
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Account>().HasData(
+                new Account
+                {
+                    Id = 1,
+                    FirstName = "YouBank",
+                    LastName = "settlement Account",
+                    AccountType = (AccountType)3,
+                    PhoneNumber = "08035064624",
+                    Email = "settlement@youbank.com",
+                    AccountNumberGenerated = "9053769810",
+                    CurrentAccountBalance = "999999999",
+                    DateCreated = DateTime.Now,
+                    DateLastUpdated = DateTime.Now,
+                });
         }
     }
 }

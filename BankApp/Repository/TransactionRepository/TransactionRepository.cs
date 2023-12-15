@@ -6,6 +6,7 @@ using BankApp.Repository.AccountRepository;
 using BankApp.Utils;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace BankApp.Repository.TransactionRepository
 {
@@ -147,6 +148,22 @@ namespace BankApp.Repository.TransactionRepository
 
             try
             {
+                if (!Regex.IsMatch(AccountNumber, @"^[0][1-9]\d{9}$|^[1-9]\d{9}$"))
+                {
+                    //return NotFound("Account Number must be 10-digit");
+                    response.ResponseCode = "404"; // Use a specific code for invalid deposit amount
+                    response.ResponseMessage = "Account Number must be 10-digit";
+                    response.Data = null;
+
+                }
+                if (Amount > int.MaxValue)
+                {
+                    //return BadRequest("Amount is too large. Please enter a smaller amount.");
+                    response.ResponseCode = "404"; // Use a specific code for invalid deposit amount
+                    response.ResponseMessage = "Amount is too large. Please enter a smaller amount.";
+                    response.Data = null;
+
+                }
                 var authUser = _repo.Authenticate(AccountNumber, TransactionPin);
                 if (authUser == null) throw new ApplicationException("Invalid credentials");
 

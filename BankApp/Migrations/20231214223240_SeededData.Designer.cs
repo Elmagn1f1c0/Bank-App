@@ -4,6 +4,7 @@ using BankApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231214223240_SeededData")]
+    partial class SeededData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,8 +81,8 @@ namespace BankApp.Migrations
                             AccountNumberGenerated = "9053769810",
                             AccountType = 3,
                             CurrentAccountBalance = "999999999",
-                            DateCreated = new DateTime(2023, 12, 15, 0, 7, 57, 224, DateTimeKind.Local).AddTicks(6970),
-                            DateLastUpdated = new DateTime(2023, 12, 15, 0, 7, 57, 224, DateTimeKind.Local).AddTicks(6987),
+                            DateCreated = new DateTime(2023, 12, 14, 23, 32, 40, 521, DateTimeKind.Local).AddTicks(1441),
+                            DateLastUpdated = new DateTime(2023, 12, 14, 23, 32, 40, 521, DateTimeKind.Local).AddTicks(1454),
                             Email = "settlement@youbank.com",
                             FirstName = "YouBank",
                             LastName = "settlement Account",

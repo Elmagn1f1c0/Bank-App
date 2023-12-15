@@ -11,5 +11,7 @@ namespace BankApp.Services.Interface
         Response MakeWithdrawal(string AccountNumber, decimal Amount, string TransactionPin);
         Response MakeFundsTransfer(string FromAccount, string ToAccount, decimal Amount, string TransactionPin);
         Response GetAll();
+        Task<Transaction> GetById(int Id);
+        Task DeleteTransaction(int Id);
     }
 }

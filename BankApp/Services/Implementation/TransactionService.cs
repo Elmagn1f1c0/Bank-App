@@ -18,6 +18,11 @@ namespace BankApp.Services.Implementation
             return _repo.CreateNewTransaction(transaction);
         }
 
+        public async Task DeleteTransaction(int Id)
+        {
+            await  _repo.DeleteTransaction(Id);
+        }
+
         public Response FindTransactionByDate(DateTime date)
         {
             return _repo.FindTransactionByDate(date);
@@ -26,6 +31,11 @@ namespace BankApp.Services.Implementation
         public Response GetAll()
         {
             return _repo.GetAll();
+        }
+
+        public async Task<Transaction> GetById(int Id)
+        {
+           return await _repo.GetById(Id);
         }
 
         public Response MakeDeposit(string AccountNumber, decimal Amount, string TransactionPin)

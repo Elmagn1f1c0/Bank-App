@@ -4,6 +4,7 @@ using BankApp.Enums;
 using BankApp.Models;
 using BankApp.Repository.AccountRepository;
 using BankApp.Utils;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
@@ -344,6 +345,28 @@ namespace BankApp.Repository.TransactionRepository
             }
 
             return response;
+        }
+        public async Task<Transaction> GetById(int Id)
+        {
+            var account = await _db.Transactions.Where(x => x.Id == Id).FirstOrDefaultAsync();
+            if (account == null) return null;
+
+            return account;
+        }
+
+        public async Task DeleteTransaction(int Id)
+        {
+            var response = new Response();
+            var account = _db.Transactions.Find(Id);
+            if (account == null)
+            {
+                response.ResponseCode = "400";
+                response.ResponseMessage = "There was a problem deleting an Transaction";
+                response.Data = null;
+
+            }
+            _db.Remove(account);
+            await _db.SaveChangesAsync();
         }
     }
 }

@@ -8,6 +8,7 @@
         </div>
         <div class="col text-end pt-1">
             <a asp-controller="Transaction" asp-action="MakeDeposit" class="btn btn-outline-primary"><i class="bi bi-plus-square-fill"></i>Make Deposit</a>
+            <a asp-controller="Transaction" asp-action="MakeTransfer" class="btn btn-outline-primary"><i class="bi bi-plus-square-fill"></i>Make Transfer</a>
 
         </div>
     </div>
@@ -15,11 +16,11 @@
         <thead>
             <tr>
                 <th>
-                    Transaction Amount
-                </th> 
-                <th>
                     TransactionUnique Reference
                 </th>
+                <th>
+                    Transaction Amount
+                </th> 
                 <th>
                     Transaction Source Account
                 </th>
@@ -48,13 +49,16 @@
             @foreach (var item in Model)
             {
                 <tr>
+                        <td>@item.TransactionUniqueReference</td>
                     <td>@item.TransactionAmount</td>
-                    <td>@item.TransactionUniqueReference</td>
                     <td>@item.TransactionSourceAccount</td>
                     <td>@item.TransactionType</td>
                     <td>@item.TransactionStatus</td>
                     <td>@item.TransactionDestinationAccount</td>
                     <td>@item.TransactionDate</td>
+                        <td>
+                            <a asp-controller="Transaction" asp-action="DeleteTransaction" asp-route-Id="@item.Id" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
+                        </td>
                 </tr>
                  }
             }

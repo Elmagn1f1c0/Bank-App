@@ -90,7 +90,7 @@ namespace BankApp.Repository.AccountRepository
             if (account == null)
             {
                 response.ResponseCode = "400";
-                response.ResponseMessage = "There wasa product deleting an account";
+                response.ResponseMessage = "There was a problem deleting an account";
                 response.Data = null;
 
             }

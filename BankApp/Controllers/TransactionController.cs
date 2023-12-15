@@ -17,7 +17,7 @@ namespace BankApp.Controllers
             _mapper = mapper;
         }
         public IActionResult TransactionIndex()
-        {;
+        {
             var transactionsResponse = _service.GetAll();
             if (transactionsResponse.ResponseCode == "00" && transactionsResponse.Data is List<Transaction> transactions)
             {
@@ -63,6 +63,83 @@ namespace BankApp.Controllers
                 return View();
             }
             
+        }
+        public async Task<IActionResult> MakeTransfer()
+        {
+
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult MakeTransfer(string FromAccount, string ToAccount, decimal Amount, string TransactionPin)
+        {
+
+            Response response = _service.MakeFundsTransfer(FromAccount, ToAccount,Amount, TransactionPin);
+
+            if (response.ResponseCode == "03")
+            {
+                return BadRequest("Invalid username or pin");
+            }
+            else if (response.ResponseCode == "05")
+            {
+                return BadRequest("Insufficient balance for deposit");
+            }
+
+            if (response != null)
+            {
+                return RedirectToAction("TransactionIndex");
+            }
+            else
+            {
+
+                ModelState.AddModelError(string.Empty, "Failed to make a transfer.");
+                return View();
+            }
+
+        }
+        public async Task<IActionResult> DeleteTransaction(int Id)
+        {
+
+            var account = await _service.GetById(Id);
+
+            if (account == null)
+            {
+                return NotFound();
+            }
+            TransactionRequest updateModel = new TransactionRequest
+            {
+                Id = account.Id,
+                TransactionAmount = account.TransactionAmount,
+                TransactionDate = account.TransactionDate,
+                TransactionUniqueReference = account.TransactionUniqueReference,
+                TransactionSourceAccount = account.TransactionSourceAccount,
+                TransactionDestinationAccount = account.TransactionDestinationAccount,
+                TransactionStatus = account.TransactionStatus,
+                TransactionParticulars = account.TransactionParticulars
+            };
+
+            return View(updateModel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteTransaction(TransactionRequest model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError(string.Empty, "Phone number or email already exists.");
+                return View(model);
+            }
+
+            var account = _mapper.Map<Transaction>(model);
+
+            await _service.DeleteTransaction(model.Id);
+
+            return RedirectToAction(nameof(TransactionIndex));
+
+
+
         }
     }
 }

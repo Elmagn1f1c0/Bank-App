@@ -2,10 +2,12 @@
 using BankApp.DTO;
 using BankApp.Models;
 using BankApp.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankApp.Controllers
 {
+    [Authorize]
     public class TransactionController : Controller
     {
         private readonly ITransactionService _service;
@@ -37,12 +39,11 @@ namespace BankApp.Controllers
                 return View(emptyList);
             }
         }
-        public async Task<IActionResult> MakeDeposit()
+        public IActionResult MakeDeposit()
         {
 
             return View();
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -54,28 +55,30 @@ namespace BankApp.Controllers
 
                 if (response.ResponseCode == "03")
                 {
-                    //return BadRequest("Invalid username or pin");
                     ModelState.AddModelError(string.Empty, "Invalid username or pin");
                     return View();
                 }
                 else if (response.ResponseCode == "05")
                 {
-                    // return BadRequest("Insufficient balance for deposit");
                     ModelState.AddModelError(string.Empty, "Insufficient balance for deposit");
                     return View();
                 }
-
-                if (response != null)
+                else if (response.ResponseCode == "06")
+                {
+                    ModelState.AddModelError(string.Empty, "Deposit must not exceed 200,000");
+                    return View();
+                }
+                else if (response != null && response.ResponseCode == "00")
                 {
                     return RedirectToAction("TransactionIndex");
                 }
                 else
                 {
-
                     ModelState.AddModelError(string.Empty, "Failed to make a deposit.");
                     return View();
                 }
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 if (ex.Message.Contains("Deposit amount should not be within the deposit range"))
                 {
@@ -84,9 +87,9 @@ namespace BankApp.Controllers
                 }
                 return StatusCode(500, "An error occurred while creating the account");
             }
-            
         }
-        public async Task<IActionResult> MakeTransfer()
+
+        public IActionResult MakeTransfer()
         {
 
             return View();
@@ -108,12 +111,16 @@ namespace BankApp.Controllers
                 }
                 else if (response.ResponseCode == "05")
                 {
-                    //return BadRequest("Insufficient balance for transfer");
                     ModelState.AddModelError(string.Empty, "Insufficient balance for transfer");
                     return View();
                 }
+                else if (response.ResponseCode == "06")
+                {
+                    ModelState.AddModelError(string.Empty, "Transfer must not exceed 200,000");
+                    return View();
+                }
 
-                if (response != null)
+                else if (response != null)
                 {
                     return RedirectToAction("TransactionIndex");
                 }
@@ -136,7 +143,7 @@ namespace BankApp.Controllers
             
 
         }
-        public async Task<IActionResult> MakeWithdrawal()
+        public IActionResult MakeWithdrawal()
         {
 
             return View();
@@ -162,8 +169,13 @@ namespace BankApp.Controllers
                     ModelState.AddModelError(string.Empty, "Insufficient balance for withdrawal");
                     return View();
                 }
+                else if (response.ResponseCode == "06")
+                {
+                    ModelState.AddModelError(string.Empty, "Withdrawal must not exceed 200,000");
+                    return View();
+                }
 
-                if (response != null)
+                else if (response != null)
                 {
                     return RedirectToAction("TransactionIndex");
                 }
@@ -224,8 +236,6 @@ namespace BankApp.Controllers
             await _service.DeleteTransaction(model.Id);
 
             return RedirectToAction(nameof(TransactionIndex));
-
-
 
         }
     }

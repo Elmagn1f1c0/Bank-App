@@ -89,6 +89,14 @@ namespace BankApp.Repository.TransactionRepository
                     response.ResponseCode = "05"; // Use a specific code for insufficient balance for transfer
                     response.ResponseMessage = "Insufficient balance for transfer";
                     response.Data = null;
+                    return response;
+                }
+                else if (Amount > 200000)
+                {
+                    response.ResponseCode = "06";
+                    response.ResponseMessage = "Transfer must not exceed 200,000";
+                    response.Data = null;
+                    return response;
                 }
                 else
                 {
@@ -112,6 +120,7 @@ namespace BankApp.Repository.TransactionRepository
                         response.ResponseCode = "00";
                         response.ResponseMessage = "Transaction successful!";
                         response.Data = null;
+                        return response;
                     }
                     else
                     {
@@ -119,6 +128,7 @@ namespace BankApp.Repository.TransactionRepository
                         response.ResponseCode = "02";
                         response.ResponseMessage = "Transaction failed!";
                         response.Data = null;
+                        return response;
                     }
                 }
             }
@@ -151,19 +161,18 @@ namespace BankApp.Repository.TransactionRepository
             {
                 if (!Regex.IsMatch(AccountNumber, @"^[0][1-9]\d{9}$|^[1-9]\d{9}$"))
                 {
-                    //return NotFound("Account Number must be 10-digit");
-                    response.ResponseCode = "404"; 
+                    response.ResponseCode = "06"; 
                     response.ResponseMessage = "Account Number must be 10-digit";
                     response.Data = null;
+                    return response;
 
                 }
-                if (Amount > int.MaxValue)
+                else if (Amount > 200000) 
                 {
-                    //return BadRequest("Amount is too large. Please enter a smaller amount.");
-                    response.ResponseCode = "404"; 
-                    response.ResponseMessage = "Amount is too large. Please enter a smaller amount.";
+                    response.ResponseCode = "06";
+                    response.ResponseMessage = "Deposit must not exceed 200,000";
                     response.Data = null;
-
+                    return response;
                 }
                 var authUser = _repo.Authenticate(AccountNumber, TransactionPin);
                 if (authUser == null) throw new ApplicationException("Invalid credentials");
@@ -181,6 +190,7 @@ namespace BankApp.Repository.TransactionRepository
                     response.ResponseCode = "04"; 
                     response.ResponseMessage = "Invalid deposit amount";
                     response.Data = null;
+                    return response;
                 }
                 else if (Amount > currentBalance)
                 {
@@ -188,6 +198,7 @@ namespace BankApp.Repository.TransactionRepository
                     response.ResponseCode = "05"; 
                     response.ResponseMessage = "Insufficient balance for deposit";
                     response.Data = null;
+                    return response;
                 }
                 else
                 {
@@ -207,6 +218,7 @@ namespace BankApp.Repository.TransactionRepository
                         response.ResponseCode = "00";
                         response.ResponseMessage = "Transaction successful!";
                         response.Data = null;
+                        return response;
                     }
                     else
                     {
@@ -214,6 +226,7 @@ namespace BankApp.Repository.TransactionRepository
                         response.ResponseCode = "02";
                         response.ResponseMessage = "Transaction failed!";
                         response.Data = null;
+                        return response;
                     }
                 }
             }
@@ -269,7 +282,15 @@ namespace BankApp.Repository.TransactionRepository
                         response.ResponseCode = "01"; // Use a specific code for insufficient balance
                         response.ResponseMessage = "Insufficient balance";
                         response.Data = null;
+                        return response;
                         
+                    }
+                    else if (Amount > 200000)
+                    {
+                        response.ResponseCode = "06";
+                        response.ResponseMessage = "Withdrawal must not exceed 200,000";
+                        response.Data = null;
+                        return response;
                     }
                     else
                     {

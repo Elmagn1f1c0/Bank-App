@@ -1,5 +1,6 @@
 ﻿using BankApp.DTO;
 using BankApp.Services.Interface;
+using Books.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,127 +11,64 @@ namespace BankApp.Services.Implementation
 {
     public class AuthService : IAuthService
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly IConfiguration _config;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AuthService(UserManager<IdentityUser> userManager, IConfiguration config)
+        public AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
-            _config = config;
+            _signInManager = signInManager;
+            _httpContextAccessor = httpContextAccessor;
         }
-
-         
-        public async Task<ResponseDto<bool>> RegisterUser(RegisterUser user)
+        public async Task<ResponseDto<string>> ExternalLogin(string email, string firstName, string surname)
         {
-            var response = new ResponseDto<bool>();
-
-            try
+            var response = new ResponseDto<string>();
+            var user = await _userManager.FindByNameAsync(email);
+            if (user != null)
             {
-                var existingUser = await _userManager.FindByNameAsync(user.UserName);
-                var existingEmailUser = await _userManager.FindByEmailAsync(user.Email);
-
-                if (existingUser != null || existingEmailUser != null)
+                var isInRole = await _userManager.IsInRoleAsync(user, "Admin");
+                if (isInRole)
                 {
-                    response.DisplayMessage = "User with the same username or email already exists.";
-                    response.StatusCode = 400;
-                    response.Result = false;
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    response.StatusCode = StatusCodes.Status200OK;
+                    response.Result = "/Account/AccountIndex";
                 }
                 else
                 {
-                    var identityUser = new IdentityUser
-                    {
-                        UserName = user.UserName,
-                        Email = user.Email,
-                    };
-
-                    var result = await _userManager.CreateAsync(identityUser, user.Password);
-
-                    if (result.Succeeded)
-                    {
-                        response.DisplayMessage = "User registration successful.";
-                        response.StatusCode = 200;
-                        response.Result = true;
-                    }
-                    else
-                    {
-                        response.DisplayMessage = "Password format not correct.";
-                        response.StatusCode = 500;
-                        response.Result = false;
-                    }
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    response.StatusCode = StatusCodes.Status200OK;
+                    response.Result = "/Account/AccountIndex"; 
                 }
+
             }
-            catch (Exception)
+            else
             {
-                response.DisplayMessage = "An error occurred during user registration.";
-                response.StatusCode = 500;
-                response.Result = false;
+                if (!string.IsNullOrEmpty(firstName.Trim()) && !string.IsNullOrEmpty(email.Trim()) &&
+                    !string.IsNullOrEmpty(surname.Trim()))
+                {
+                    var newuser = new ApplicationUser
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        FullName = firstName,
+                        UserName = email,
+                        Email = email,
+                        EmailConfirmed = true
+                    };
+                    await _userManager.CreateAsync(newuser);
+                    await _signInManager.SignInAsync(newuser, isPersistent: false);
+
+                    response.StatusCode = StatusCodes.Status200OK;
+                    response.Result = "/Account/AccountIndex";
+                }
+                else
+                {
+                    response.StatusCode = StatusCodes.Status200OK;
+                    response.Result = "/Auth/Login";
+                }
 
             }
-
             return response;
         }
-
-
-        //public async Task<bool> Login(LoginUser user)
-        //{
-        //   var identityUser = await _userManager.FindByEmailAsync(user.Email);
-        //    if (identityUser == null)
-        //    {
-        //        return false;
-        //    }
-        //    return await _userManager.CheckPasswordAsync(identityUser, user.Password);
-        //}
-        public async Task<ResponseDto<bool>> Login(LoginUser user)
-        {
-            var identityUser = await _userManager.FindByEmailAsync(user.Email);
-            if (identityUser == null)
-            {
-                return new ResponseDto<bool>
-                {
-                    DisplayMessage = "User not found",
-                    StatusCode = 404,
-                    Result = false
-                };
-            }
-
-            var isPasswordCorrect = await _userManager.CheckPasswordAsync(identityUser, user.Password);
-            if (!isPasswordCorrect)
-            {
-                return new ResponseDto<bool>
-                {
-                    DisplayMessage = "Incorrect password",
-                    StatusCode = 401,
-                    Result = false
-                };
-            }
-
-            return new ResponseDto<bool>
-            {
-                DisplayMessage = "Login successful",
-                StatusCode = 200,
-                Result = true
-            };
-        }
-
-        public string GenerateTokenString(LoginUser user)
-        {
-            var claims = new List<Claim>
-            { 
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, "Admin"),
-            };
-
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Jwt:Key").Value));
-
-            var signingCred = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
-            var securityToken = new JwtSecurityToken(
-                claims:claims,
-                expires: DateTime.Now.AddMinutes(60),
-                issuer:_config.GetSection("Jwt:Issuer").Value,
-                audience:_config.GetSection("Jwt:Audience").Value,
-                signingCredentials:signingCred 
-                );
-            string tokenstring = new JwtSecurityTokenHandler().WriteToken(securityToken);
-            return tokenstring;
-    }   }
+    }
 }

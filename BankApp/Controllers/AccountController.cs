@@ -2,10 +2,12 @@
 using BankApp.DTO;
 using BankApp.Models;
 using BankApp.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankApp.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly IAccountService _service;
@@ -92,7 +94,7 @@ namespace BankApp.Controllers
             return View("AccountIndex", new List<GetAccountModel>());
         }
 
-        public async Task<IActionResult> CreateAccount()
+        public IActionResult CreateAccount()
         {
 
             return View();

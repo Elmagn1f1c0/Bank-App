@@ -2,16 +2,22 @@
 
 namespace BankApp.DTO
 {
-    public class RegisterUser
+    public class RegisterVM
     {
-        [Required(ErrorMessage = "Username is required.")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "Username must be between 3 and 50 characters.")]
-        public string UserName { get; set; }
-
         [Required(ErrorMessage = "Email address is required.")]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string Email { get; set; }
 
+        [Required(ErrorMessage = "Name is required.")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Name must be between 3 and 50 characters.")]
+        public string Name { get; set; }
+        [Required(ErrorMessage = "Phone number is required.")]
+        [StringLength(11, ErrorMessage = "Phone number must not exceed 11 characters.")]
+        public string PhoneNumber { get; set; }
+        [Required(ErrorMessage = "Address is required.")]
+        public string Address { get; set; }
+        [Required(ErrorMessage = "State is required.")]
+        public string State { get; set; }
         [Required(ErrorMessage = "Password is required.")]
         [StringLength(100, MinimumLength = 5, ErrorMessage = "Password must be at least 6 characters.")]
         [DataType(DataType.Password)]

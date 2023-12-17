@@ -181,6 +181,10 @@
       "PackagePath": "staticwebassets\\BankApp.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\css\\Index.css",
+      "PackagePath": "staticwebassets\\css\\Index.css"
+    },
+    {
       "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\css\\bootswatchTheme.css",
       "PackagePath": "staticwebassets\\css\\bootswatchTheme.css"
     },
@@ -193,16 +197,92 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\Reg.png",
-      "PackagePath": "staticwebassets\\images\\Reg.png"
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\bg-intro-desktop.svg",
+      "PackagePath": "staticwebassets\\images\\bg-intro-desktop.svg"
     },
     {
-      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\Socialicon.png",
-      "PackagePath": "staticwebassets\\images\\Socialicon.png"
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\bg-intro-mobile.svg",
+      "PackagePath": "staticwebassets\\images\\bg-intro-mobile.svg"
     },
     {
-      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\loginhero.png",
-      "PackagePath": "staticwebassets\\images\\loginhero.png"
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\destop-screenshot.png",
+      "PackagePath": "staticwebassets\\images\\destop-screenshot.png"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\favicon-32x32.png",
+      "PackagePath": "staticwebassets\\images\\favicon-32x32.png"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\icon-api.svg",
+      "PackagePath": "staticwebassets\\images\\icon-api.svg"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\icon-budgeting.svg",
+      "PackagePath": "staticwebassets\\images\\icon-budgeting.svg"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\icon-close.svg",
+      "PackagePath": "staticwebassets\\images\\icon-close.svg"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\icon-facebook.svg",
+      "PackagePath": "staticwebassets\\images\\icon-facebook.svg"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\icon-hamburger.svg",
+      "PackagePath": "staticwebassets\\images\\icon-hamburger.svg"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\icon-instagram.svg",
+      "PackagePath": "staticwebassets\\images\\icon-instagram.svg"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\icon-onboarding.svg",
+      "PackagePath": "staticwebassets\\images\\icon-onboarding.svg"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\icon-online.svg",
+      "PackagePath": "staticwebassets\\images\\icon-online.svg"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\icon-pinterest.svg",
+      "PackagePath": "staticwebassets\\images\\icon-pinterest.svg"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\icon-twitter.svg",
+      "PackagePath": "staticwebassets\\images\\icon-twitter.svg"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\icon-youtube.svg",
+      "PackagePath": "staticwebassets\\images\\icon-youtube.svg"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\image-confetti.jpg",
+      "PackagePath": "staticwebassets\\images\\image-confetti.jpg"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\image-currency.jpg",
+      "PackagePath": "staticwebassets\\images\\image-currency.jpg"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\image-mockups.png",
+      "PackagePath": "staticwebassets\\images\\image-mockups.png"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\image-plane.jpg",
+      "PackagePath": "staticwebassets\\images\\image-plane.jpg"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\image-restaurant.jpg",
+      "PackagePath": "staticwebassets\\images\\image-restaurant.jpg"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\logo.svg",
+      "PackagePath": "staticwebassets\\images\\logo.svg"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\images\\mobilescreen-shot.png",
+      "PackagePath": "staticwebassets\\images\\mobilescreen-shot.png"
     },
     {
       "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\js\\site.js",
@@ -435,6 +515,18 @@
     {
       "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\photos\\Reg.png",
+      "PackagePath": "staticwebassets\\photos\\Reg.png"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\photos\\Socialicon.png",
+      "PackagePath": "staticwebassets\\photos\\Socialicon.png"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Desktop\\Bank Project - Copy\\BankApp\\BankApp\\wwwroot\\photos\\loginhero.png",
+      "PackagePath": "staticwebassets\\photos\\loginhero.png"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.BankApp.Microsoft.AspNetCore.StaticWebAssets.props",

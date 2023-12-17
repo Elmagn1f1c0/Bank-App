@@ -4,9 +4,11 @@
 }
 
 <style>
+    
     #hero-img {
         width: 698px;
         height: 600px;
+        margin-top: -20px;
     }
 
     .full-width-button {
@@ -37,14 +39,6 @@
                 <p>
                     <h4 class="text-center">Register</h4>
                 </p>
-
-               @*  @if (TempData["Error"] != null)
-                {
-                    <div class="col-md-12 alert alert-danger">
-                        <span><b>Sorry!</b> - @TempData["Error"] </span>
-                    </div>
-                } *@
-
                 <div class="col-md-8 offset-md-2">
                     <form asp-action="Register">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -91,6 +85,6 @@
         </div>
     </div>
     <div class="col-6">
-        <img src="~/images/loginhero.png" alt="Image" class="" id="hero-img" />
+        <img src="~/photos/loginhero.png" alt="Image" class="" id="hero-img" />
     </div>
 </div>

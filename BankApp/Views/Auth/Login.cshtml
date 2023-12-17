@@ -11,6 +11,19 @@
     #hero-img {
         width: 698px;
         height: 600px;
+        margin-top: -20px;
+    }
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0,0,0,.125);
+        border-radius: .25rem;
+        margin-top: -40px;
     }
 
     .full-width-button {
@@ -33,15 +46,15 @@
         width: 100%;
     }
 </style>
-<div class="d-flex bg-white w-100">
-    <div class="col-6">
+<div class="d-flex bg-white w-100 h-auto">
+    <div class="col-6 p-4">
         <div class="card-bodies p-4 card">
             <h2 class="welcome-heading d-flex justify-content-center w-100">Welcome, User</h2>
             <p class="login d-flex justify-content-center w-100">Login with your credentials</p>
             <div class="google-box d-flex justify-content-center w-100">
                 <div class="google-content">
                     <a asp-area="" asp-controller="Auth" asp-action="Google_Login">
-                        <img src="/images/Socialicon.png" alt="Sign in with Google" class="google-image" />
+                        <img src="/photos/Socialicon.png" alt="Sign in with Google" class="google-image" />
                         <span class="google-text">Sign in with Google</span>
                     </a>
 
@@ -68,6 +81,6 @@
         </div>
     </div>
     <div class="col-6">
-        <img src="~/images/loginhero.png" alt="Image" class="" id="hero-img" />
+        <img src="~/photos/loginhero.png" alt="Image" class="" id="hero-img" />
     </div>
     </div>

@@ -1,0 +1,122 @@
+﻿:root {
+    --Dark-Blue: hsl(233, 26%, 24%);
+    --Lime-Green: hsl(136, 65%, 51%);
+    --Bright-Cyan: hsl(192, 70%, 51%);
+    --Grayish-Blue: hsl(233, 8%, 62%);
+    --Light-Grayish-Blue: hsl(220, 16%, 96%);
+    --Very-Light-Gray: hsl(0, 0%, 98%);
+    --White: hsl(0, 0%, 100%);
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 25%;
+}
+
+body {
+    font-size: 18px;
+    color: var(--Dark-Blue);
+    position: relative;
+    overflow: hidden;
+}
+
+p {
+    color: var(--Grayish-Blue);
+    line-height: 1.5;
+}
+
+.header {
+    display: flex;
+    padding: 0 10%;
+    background-color: var(--White);
+    align-items: center;
+    z-index: 4;
+    position: relative;
+}
+
+.nav-background {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.nav-group a {
+    display: inline-block;
+    font-weight: 400;
+    font-size: 4rem;
+    margin-right: 4rem;
+    margin-left: 4rem;
+    text-decoration: none;
+    color: var(--Grayish-Blue);
+    padding: 8rem 0;
+    background-size: 0 0;
+    transition: background-size 0.3s;
+}
+
+    .nav-group a:hover {
+        color: var(--Dark-Blue);
+        background-image: linear-gradient(to right, #31d35c 0%, #2bb7da 100%);
+        background-position: bottom;
+        background-repeat: no-repeat;
+        background-size: 100% 1rem;
+    }
+
+.request-button {
+    padding: 3rem 7rem;
+    font-size: 4rem;
+    border-radius: 9rem;
+    border: none;
+    background: linear-gradient(to right, #31d35c 0%, #2bb7da 100%);
+    color: var(--White);
+}
+
+    .request-button:hover {
+        opacity: 0.7;
+        cursor: pointer;
+    }
+
+.menu-button, .close-button {
+    display: none;
+}
+
+.section1 {
+    position: relative;
+    background-color: var(--Very-Light-Gray);
+    padding-left: 10%;
+    height: 174rem;
+    display: flex;
+    align-items: center;
+}
+
+.section1-content {
+    width: 460px;
+}
+
+    .section1-content h1 {
+        font-size: 15rem;
+        font-weight: 400;
+    }
+
+    .section1-content p {
+        margin: 10rem 0 10rem 0;
+    }
+
+
+.section1-image1 {
+    background-image: url(images/image-mockups.png);
+    background-repeat: no-repeat;
+    background-position: 35rem -28rem;
+    position: absolute;
+    top: 0px;
+    right: 0;
+    z-index: 3;
+    width: 100rem;
+    height: 100rem;
+    margin-top: 60px;
+}
+

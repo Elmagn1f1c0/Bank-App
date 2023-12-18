@@ -9,47 +9,36 @@
         <div class="row">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="FromAccount" class="control-label pt-2" style="font-size:20px;"></label>
-
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="FromAccount" class="form-control" />
+                <input asp-for="FromAccount" class="form-control custom-input" />
                 <span asp-validation-for="FromAccount" class="text-danger"></span>
 
             </div>
 
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="ToAccount" class="control-label pt-2" style="font-size:20px;"></label>
-
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="ToAccount" class="form-control" />
+                <input asp-for="ToAccount" class="form-control custom-input" />
                 <span asp-validation-for="ToAccount" class="text-danger"></span>
 
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="Amount" class="control-label pt-2" style="font-size:20px;"></label>
-
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="Amount" class="form-control" />
+                <input asp-for="Amount" class="form-control custom-input" />
                 <span asp-validation-for="Amount" class="text-danger"></span>
 
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="TransactionPin" class="control-label pt-2" style="font-size:20px;"></label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="TransactionPin" class="form-control" />
+                <input asp-for="TransactionPin" class="form-control custom-input" />
                  <span asp-validation-for="TransactionPin" class="text-danger"></span>
             </div>
 
             <div class="col-5 offset-2">
-                <a asp-action="Transaction" asp-controller="AccountIndex" class="btn-primary btn form-control">Back to List</a>
+                <a asp-action="TransactionIndex" asp-controller="Transaction" class="btn-primary btn form-control">Back to List</a>
             </div>
             <div class="col-5">
-                <input type="submit" value="Deposit" class="btn btn-success btn form-control" />
+                <input type="submit" value="Transfer" class="btn btn-success btn form-control" />
             </div>
 
         </div>
@@ -60,3 +49,15 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+<style>
+    body {
+        background: linear-gradient(125deg, #90ee90 50%, #fffdd0 50%);
+        font-family: Arial, sans-serif;
+    }
+
+    .custom-input {
+        background-color: #f5f5f5;
+        color: #333333;
+        border: 1px solid #ced4da;
+    }
+</style>

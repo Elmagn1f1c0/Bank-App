@@ -13,6 +13,7 @@ namespace BankApp.MVCExtension
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+
             })
             .AddCookie()
             .AddGoogle(GoogleDefaults.AuthenticationScheme, options =>

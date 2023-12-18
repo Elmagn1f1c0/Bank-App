@@ -8,35 +8,25 @@
 
         <input hidden asp-for="Id" />
         <div class="row">
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="TransactionUniqueReference" class="control-label pt-2" style="font-size:20px;"></label>
+                <input asp-for="TransactionUniqueReference" disabled class="form-control custom-input" />
             </div>
-            <div class="col-10 pb-3">
-                <input asp-for="TransactionUniqueReference" disabled class="form-control" />
-            </div>
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="TransactionAmount" class="control-label pt-2" style="font-size:20px;"></label>
+                <input asp-for="TransactionAmount" disabled class="form-control custom-input" />
             </div>
-            <div class="col-10 pb-3">
-                <input asp-for="TransactionAmount" disabled class="form-control" />
-            </div>
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="TransactionSourceAccount" class="control-label pt-2" style="font-size:20px;"></label>
+                <input asp-for="TransactionSourceAccount" disabled class="form-control custom-input" />
             </div>
-            <div class="col-10 pb-3">
-                <textarea asp-for="TransactionSourceAccount" disabled class="form-control" rows="5"></textarea>
-            </div>
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="TransactionType" class="control-label pt-2" style="font-size:20px;"></label>
+                <input asp-for="TransactionType" disabled class="form-control custom-input" />
             </div>
-            <div class="col-10 pb-3">
-                <input asp-for="TransactionType" disabled class="form-control" />
-            </div>
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="TransactionDestinationAccount" class="control-label pt-2" style="font-size:20px;"></label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="TransactionDestinationAccount" disabled class="form-control" />
+                <input asp-for="TransactionDestinationAccount" disabled class="form-control custom-input" />
             </div>
             <div class="col-5 offset-2">
                 <a asp-action="TransactionIndex" asp-controller="Transaction" class="btn-primary btn form-control">Back to List</a>
@@ -53,3 +43,15 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+<style>
+    body {
+        background: linear-gradient(125deg, #90ee90 50%, #fffdd0 50%);
+        font-family: Arial, sans-serif;
+    }
+
+    .custom-input {
+        background-color: #f5f5f5;
+        color: #333333;
+        border: 1px solid #ced4da;
+    }
+</style>

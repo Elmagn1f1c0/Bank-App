@@ -7,77 +7,56 @@
         <hr />
 
         <div class="row">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger col-12"></div>
 
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="FirstName" class="control-label pt-2" style="font-size:20px;"></label>
-
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="FirstName" class="form-control" />
+                <input asp-for="FirstName" class="form-control custom-input" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
 
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="LastName" class="control-label pt-2" style="font-size:20px;"></label>
-
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="LastName" class="form-control" />
+                <input asp-for="LastName" class="form-control custom-input" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
 
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="PhoneNumber" class="control-label pt-2" style="font-size:20px;"></label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="PhoneNumber" class="form-control" />
+                <input asp-for="PhoneNumber" class="form-control custom-input" />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="Email" class="control-label pt-2" style="font-size:20px;"></label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="Email" class="form-control" rows="5" />
+                <input asp-for="Email" class="form-control custom-input" rows="5" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="AccountType" class="control-label pt-2" style="font-size:20px;"></label>
-            </div>
-            <div class="col-10 pb-3">
                 @Html.DropDownListFor(model => model.AccountType, new SelectList(
                 new List<string> { "Savings", "Current", "Corporate", "Government" }), new { @class = "form-control" })
-                <span asp-validation-for="AccountType" class="text-danger"></span>
+                <span asp-validation-for="AccountType" class="custom-input"></span>
             </div>
 
-
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="DateCreated" class="control-label pt-2" style="font-size:20px;"></label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="DateCreated" class="form-control" />
+                <input asp-for="DateCreated" class="form-control custom-input" />
                 <span asp-validation-for="DateCreated" class="text-danger"></span>
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="DateLastUpdated" class="control-label pt-2" style="font-size:20px;"></label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="DateLastUpdated" class="form-control" />
+                <input asp-for="DateLastUpdated" class="form-control custom-input" />
                 <span asp-validation-for="DateLastUpdated" class="text-danger"></span>
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="Pin" class="control-label pt-2" style="font-size:20px;"></label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="Pin" class="form-control" />
+                <input asp-for="Pin" class="form-control custom-input" />
                 <span asp-validation-for="Pin"   class="text-danger"></span>
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-6 pb-3">
                 <label asp-for="ConfirmPin" class="control-label pt-2" style="font-size:20px;"></label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="ConfirmPin" class="form-control" />
+                <input asp-for="ConfirmPin" class="form-control custom-input" />
                 <span asp-validation-for="ConfirmPin" class="text-danger"></span>
             </div>
             <div class="col-5 offset-2">
@@ -95,3 +74,16 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<style>
+    body {
+        background: linear-gradient(125deg, #90ee90 50%, #ADD8E6 50%);
+        font-family: Arial, sans-serif;
+    }
+
+    .custom-input {
+        background-color: #f5f5f5;
+        color: #333333;
+        border: 1px solid #ced4da;
+    }
+</style>

@@ -120,7 +120,7 @@ namespace BankApp.Repository.TransactionRepository
                         response.ResponseCode = "00";
                         response.ResponseMessage = "Transaction successful!";
                         response.Data = null;
-                        return response;
+                        
                     }
                     else
                     {
@@ -218,7 +218,7 @@ namespace BankApp.Repository.TransactionRepository
                         response.ResponseCode = "00";
                         response.ResponseMessage = "Transaction successful!";
                         response.Data = null;
-                        return response;
+                        
                     }
                     else
                     {

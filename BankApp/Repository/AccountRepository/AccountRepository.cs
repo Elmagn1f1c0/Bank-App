@@ -84,12 +84,12 @@ namespace BankApp.Repository.AccountRepository
             account.PinSalt = pinSalt;
 
             _db.Accounts.Add(account);
-            await _db.SaveChangesAsync(); // Use async SaveChanges
+            await _db.SaveChangesAsync(); 
 
             response.ResponseCode = "Success";
             response.ResponseMessage = "Account created successfully.";
-            response.Data = account; // Set account as data in the response
-            return response; // Return the response object with account data
+            response.Data = account; 
+            return response; 
         }
 
 
@@ -149,6 +149,7 @@ namespace BankApp.Repository.AccountRepository
             {
                 throw new ApplicationException("Account does not exist");
             }
+            
 
             if (!string.IsNullOrWhiteSpace(account.Email))
             {
@@ -186,6 +187,9 @@ namespace BankApp.Repository.AccountRepository
             }
 
             accountToBeUpdated.DateLastUpdated = DateTime.UtcNow;
+            accountToBeUpdated.FirstName = account.FirstName;
+            accountToBeUpdated.LastName = account.LastName;
+            accountToBeUpdated.AccountType = account.AccountType;
 
             _db.Accounts.Update(accountToBeUpdated);
             await _db.SaveChangesAsync();

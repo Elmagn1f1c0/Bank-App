@@ -30,6 +30,7 @@ namespace BankApp.Controllers
         public IActionResult Register() => View(new RegisterVM());
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
             if (!ModelState.IsValid) return View(registerVM);
@@ -37,7 +38,7 @@ namespace BankApp.Controllers
             var user = await _userManager.FindByEmailAsync(registerVM.Email);
             if (user != null)
             {
-                TempData["Error"] = "This email address is already in use";
+                ModelState.AddModelError(string.Empty, "Email address is already taken.");
                 return View(registerVM);
             }
 

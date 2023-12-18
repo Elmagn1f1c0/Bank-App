@@ -88,10 +88,11 @@ namespace BankApp.Controllers
 
             if (searchResults.Count > 0)
             {
-                return View("AccountIndex", searchResults);
+                var totalItems = accounts.Count();
+                return View("AccountIndex", new PaginatedList<GetAccountModel>(searchResults, totalItems, 1, 1)); 
             }
 
-            return View("AccountIndex", new List<GetAccountModel>());
+            return View("AccountIndex", new PaginatedList<GetAccountModel>(new List<GetAccountModel>(), 0, 1, 1));
         }
 
         public IActionResult CreateAccount()
@@ -210,6 +211,7 @@ namespace BankApp.Controllers
                 LastName = account.LastName,
                 AccountNumberGenerated = account.AccountNumberGenerated,
                 AccountType = account.AccountType,
+                CurrentAccountBalance = account.CurrentAccountBalance,
                 PhoneNumber = account.PhoneNumber,
                 Email = account.Email,
                 DateLastUpdated = account.DateLastUpdated

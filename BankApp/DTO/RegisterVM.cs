@@ -16,8 +16,6 @@ namespace BankApp.DTO
         public string PhoneNumber { get; set; }
         [Required(ErrorMessage = "Address is required.")]
         public string Address { get; set; }
-        [Required(ErrorMessage = "State is required.")]
-        public string State { get; set; }
         [Required(ErrorMessage = "Password is required.")]
         [StringLength(100, MinimumLength = 5, ErrorMessage = "Password must be at least 6 characters.")]
         [DataType(DataType.Password)]

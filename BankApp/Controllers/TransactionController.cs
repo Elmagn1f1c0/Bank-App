@@ -55,7 +55,7 @@ namespace BankApp.Controllers
 
                 if (response.ResponseCode == "03")
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid username or pin");
+                    ModelState.AddModelError(string.Empty, "Invalid account number or pin");
                     return View();
                 }
                 else if (response.ResponseCode == "05")
@@ -85,7 +85,11 @@ namespace BankApp.Controllers
                     ModelState.AddModelError("Deposit", "Deposit amount should not be within the deposit range");
                     return BadRequest(ModelState);
                 }
-                return StatusCode(500, "An error occurred while creating the account");
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "An error occurred while depositing");
+                }
+                return View();
             }
         }
 
@@ -106,7 +110,7 @@ namespace BankApp.Controllers
 
                 if (response.ResponseCode == "03")
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid username or pin");
+                    ModelState.AddModelError(string.Empty, "Invalid account number or pin");
                     return View();
                 }
                 else if (response.ResponseCode == "05")
@@ -134,10 +138,14 @@ namespace BankApp.Controllers
             {
                 if (ex.Message.Contains("Transfer amount should not be within the certain range"))
                 {
-                    ModelState.AddModelError("Transfer", "Transfer amount should not be within the deposit range");
+                    ModelState.AddModelError("Transfer", "Transfer amount should not be within the transfer range");
                     return BadRequest(ModelState);
                 }
-                return StatusCode(500, "An error occurred while creating the account");
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "An error occurred while Transferring");
+                }
+                return View();
             }
 
             
@@ -160,7 +168,7 @@ namespace BankApp.Controllers
 
                 if (response.ResponseCode == "03")
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid username or pin");
+                    ModelState.AddModelError(string.Empty, "Invalid account number or pin");
                     return View();
                 }
                 else if (response.ResponseCode == "05")
@@ -190,10 +198,14 @@ namespace BankApp.Controllers
             {
                 if (ex.Message.Contains("Withdrawal amount should not be within the certain range"))
                 {
-                    ModelState.AddModelError("Withdrawal", "Withdrawal amount should not be within the deposit range");
+                    ModelState.AddModelError("Withdrawal", "Withdrawal amount should not be within the withdraw range");
                     return BadRequest(ModelState);
                 }
-                return StatusCode(500, "An error occurred while creating the account");
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "An error occurred while withdrawaing");
+                }
+                return View();
             }
 
 

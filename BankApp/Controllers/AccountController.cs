@@ -89,6 +89,7 @@ namespace BankApp.Controllers
             if (searchResults.Count > 0)
             {
                 var totalItems = accounts.Count();
+                TempData["success"] = "Search successful";
                 return View("AccountIndex", new PaginatedList<GetAccountModel>(searchResults, totalItems, 1, 1)); 
             }
 
@@ -128,6 +129,7 @@ namespace BankApp.Controllers
                 }
                 else if (result.ResponseCode == "Success")
                 {
+                    TempData["success"] = "Account created successfully";
                     return RedirectToAction(nameof(AccountIndex));
                 }
 
@@ -185,6 +187,7 @@ namespace BankApp.Controllers
                     ModelState.AddModelError("PhoneNumber", "Phone number already in use");
                     return View(model);
                 }
+                TempData["success"] = "Account updated successfully";
 
                 return RedirectToAction(nameof(AccountIndex));
             }
@@ -234,6 +237,7 @@ namespace BankApp.Controllers
             var account = _mapper.Map<Account>(model);
 
             await _service.Delete(model.Id);
+            TempData["success"] = "Account deleted successfully";
 
             return RedirectToAction(nameof(AccountIndex));
 

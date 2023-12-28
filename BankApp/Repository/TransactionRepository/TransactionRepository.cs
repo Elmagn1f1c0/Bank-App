@@ -48,7 +48,7 @@ namespace BankApp.Repository.TransactionRepository
 
             if (transactions.Count == 0)
             {
-                response.ResponseCode = "400";  // Set the appropriate error code for not found
+                response.ResponseCode = "400"; 
                 response.ResponseMessage = "No transactions found for the specified date.";
             }
             else
@@ -67,11 +67,9 @@ namespace BankApp.Repository.TransactionRepository
             Account destinationAccount;
             Transaction transaction = new Transaction();
 
-            // First check that the user account is valid then authenticate it by injecting IAccountRepository
             var authUser = _repo.Authenticate(FromAccount, TransactionPin);
             if (authUser == null) throw new ApplicationException("Invalid credentials");
 
-            // Validating it now
             try
             {
                 // For a funds transfer, our bankSettlementAccount is the destination getting the money from the user's account
@@ -86,7 +84,7 @@ namespace BankApp.Repository.TransactionRepository
                 if (Amount > sourceBalance)
                 {
                     transaction.TransactionStatus = TranStatus.Failed;
-                    response.ResponseCode = "05"; // Use a specific code for insufficient balance for transfer
+                    response.ResponseCode = "05"; 
                     response.ResponseMessage = "Insufficient balance for transfer";
                     response.Data = null;
                     return response;
@@ -100,10 +98,8 @@ namespace BankApp.Repository.TransactionRepository
                 }
                 else
                 {
-                    // Subtract the Amount from the sourceBalance
                     sourceBalance -= Amount;
 
-                    // Add the Amount to the destinationBalance
                     destinationBalance += Amount;
 
                     // Update the sourceAccount's balance as a string
@@ -233,7 +229,7 @@ namespace BankApp.Repository.TransactionRepository
             catch (ApplicationException ex)
             {
                 transaction.TransactionStatus = TranStatus.Failed;
-                response.ResponseCode = "03"; // Use a specific code for invalid PIN or Account Number
+                response.ResponseCode = "03";
                 response.ResponseMessage = "Invalid username or pin";
                 response.Data = null;
                 _logger.LogError($"Invalid username or pin: {ex.Message}");
@@ -262,11 +258,9 @@ namespace BankApp.Repository.TransactionRepository
             Account destinationAccount;
             Transaction transaction = new Transaction();
 
-            // First check that the user account is valid then authenticate it by injecting IAccountRepository
             var authUser = _repo.Authenticate(AccountNumber, TransactionPin);
             if (authUser == null) throw new ApplicationException("Invalid credentials");
 
-            // Validating it now
             try
             {
                 // For a withdrawal, our bankSettlementAccount is the destination getting the money from the user's account
@@ -279,7 +273,7 @@ namespace BankApp.Repository.TransactionRepository
                     if (Amount > currentBalance)
                     {
                         transaction.TransactionStatus = TranStatus.Failed;
-                        response.ResponseCode = "01"; // Use a specific code for insufficient balance
+                        response.ResponseCode = "01";
                         response.ResponseMessage = "Insufficient balance";
                         response.Data = null;
                         return response;

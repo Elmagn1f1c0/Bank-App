@@ -70,6 +70,7 @@ namespace BankApp.Controllers
                 }
                 else if (response != null && response.ResponseCode == "00")
                 {
+                    TempData["success"] = "Deposit successful";
                     return RedirectToAction("TransactionIndex");
                 }
                 else
@@ -126,6 +127,7 @@ namespace BankApp.Controllers
 
                 else if (response != null)
                 {
+                    TempData["success"] = "Transfer successful";
                     return RedirectToAction("TransactionIndex");
                 }
                 else
@@ -185,6 +187,7 @@ namespace BankApp.Controllers
 
                 else if (response != null)
                 {
+                    TempData["success"] = "Withdraw successful";
                     return RedirectToAction("TransactionIndex");
                 }
                 else
@@ -246,6 +249,7 @@ namespace BankApp.Controllers
             var account = _mapper.Map<Transaction>(model);
 
             await _service.DeleteTransaction(model.Id);
+            TempData["success"] = "Transaction deleted successfully";
 
             return RedirectToAction(nameof(TransactionIndex));
 

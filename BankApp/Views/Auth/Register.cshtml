@@ -1,7 +1,10 @@
-﻿@model BankApp.DTO.RegisterVM
+﻿@model RegisterVM
 @{
     ViewData["Title"] = "Sign up for a new account";
+    bool isAuthenticated = User.Identity.IsAuthenticated;
 }
+@if (!isAuthenticated)
+{
 
 <div class="row">
     <div class="col-md-6">
@@ -59,6 +62,14 @@
         <img src="~/photos/loginhero.png" alt="Image" class="" id="hero-img" />
     </div>
 </div>
+}
+else
+{
+
+    <p>You are already logged in. Redirecting...</p>
+
+    <script>window.location.href = '/Account/AccountIndex';</script>
+}
 
 <style>
 

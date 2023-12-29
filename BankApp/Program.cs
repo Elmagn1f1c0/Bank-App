@@ -1,13 +1,13 @@
+using BankApp.Core.Repository.TransactionRepository;
+using BankApp.Core.Services.Implementation;
+using BankApp.Core.Services.Interface;
+using BankApp.Core.Utils;
 using BankApp.Data;
-using BankApp.MVCExtension;
-using BankApp.Repository.AccountRepository;
-using BankApp.Repository.TransactionRepository;
-using BankApp.Services.Implementation;
-using BankApp.Services.Interface;
-using BankApp.Utils;
-using Books.Models;
+using BankApp.Data.Models;
+using BankApp.Core.Repository.AccountRepository;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using BankApp.Core.MVCExtension;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

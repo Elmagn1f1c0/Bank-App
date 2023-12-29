@@ -1,4 +1,4 @@
-﻿using BankApp.Models;
+﻿using BankApp.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

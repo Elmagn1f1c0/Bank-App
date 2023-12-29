@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BankApp</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="~/BankApp.styles.css" asp-append-version="true" />
@@ -39,7 +39,7 @@
                         </ul>
                         <form class="form" asp-controller="Account" asp-action="Search">
                             <div class="d-flex justify-content-end">
-                                <input name="searchString" type="text" class="form-control" placeholder="Search for an account..." aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <input name="searchString" type="text" class="search" placeholder="Search for an account..." aria-label="Recipient's username" aria-describedby="button-addon2">
                                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
                             </div>
                         </form>
@@ -58,11 +58,6 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - BankApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
 
     <style>
         #hide-drop-down {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using BankApp.DTO;
-using BankApp.Models;
+using BankApp.Data.DTO;
+using BankApp.Data.Models;
 
 namespace BankApp.Profiles
 {

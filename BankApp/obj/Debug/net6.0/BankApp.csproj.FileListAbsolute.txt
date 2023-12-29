@@ -207,3 +207,7 @@ C:\Users\hp\Desktop\Bank Project - Copy\BankApp\BankApp\obj\Debug\net6.0\BankApp
 C:\Users\hp\Desktop\Bank Project - Copy\BankApp\BankApp\obj\Debug\net6.0\BankApp.genruntimeconfig.cache
 C:\Users\hp\Desktop\Bank Project - Copy\BankApp\BankApp\obj\Debug\net6.0\ref\BankApp.dll
 C:\Users\hp\Desktop\Bank Project - Copy\BankApp\BankApp\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.Google.dll
+C:\Users\hp\Desktop\Bank Project - Copy\BankApp\BankApp\bin\Debug\net6.0\BankApp.Core.dll
+C:\Users\hp\Desktop\Bank Project - Copy\BankApp\BankApp\bin\Debug\net6.0\BankApp.Data.dll
+C:\Users\hp\Desktop\Bank Project - Copy\BankApp\BankApp\bin\Debug\net6.0\BankApp.Core.pdb
+C:\Users\hp\Desktop\Bank Project - Copy\BankApp\BankApp\bin\Debug\net6.0\BankApp.Data.pdb

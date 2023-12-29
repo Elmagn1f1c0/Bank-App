@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using BankApp.DTO;
-using BankApp.Models;
-using BankApp.Services.Interface;
+using BankApp.Data.DTO;
+using BankApp.Data.Models;
+using BankApp.Core.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,21 +53,13 @@ namespace BankApp.Controllers
             {
                 Response response = _service.MakeDeposit(AccountNumber, Amount, TransactionPin);
 
-                if (response.ResponseCode == "03")
+                if (response != null && response.ResponseCode == "03")
                 {
+                    TempData["error"] = "Invalid account number or pin";
                     ModelState.AddModelError(string.Empty, "Invalid account number or pin");
                     return View();
                 }
-                else if (response.ResponseCode == "05")
-                {
-                    ModelState.AddModelError(string.Empty, "Insufficient balance for deposit");
-                    return View();
-                }
-                else if (response.ResponseCode == "06")
-                {
-                    ModelState.AddModelError(string.Empty, "Deposit must not exceed 200,000");
-                    return View();
-                }
+                
                 else if (response != null && response.ResponseCode == "00")
                 {
                     TempData["success"] = "Deposit successful";
@@ -75,7 +67,8 @@ namespace BankApp.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Failed to make a deposit.");
+                    TempData["error"] = "Failed to make a deposit.";
+                    ModelState.AddModelError(string.Empty, "Check the pin, account number or if the amount exceeds 200000.");
                     return View();
                 }
             }
@@ -83,11 +76,13 @@ namespace BankApp.Controllers
             {
                 if (ex.Message.Contains("Deposit amount should not be within the deposit range"))
                 {
+                    TempData["error"] = "Deposit amount should not be within the deposit range";
                     ModelState.AddModelError("Deposit", "Deposit amount should not be within the deposit range");
                     return BadRequest(ModelState);
                 }
                 else
                 {
+                    TempData["error"] = "An error occurred while depositing";
                     ModelState.AddModelError(string.Empty, "An error occurred while depositing");
                 }
                 return View();
@@ -109,42 +104,35 @@ namespace BankApp.Controllers
             {
                 Response response = _service.MakeFundsTransfer(FromAccount, ToAccount, Amount, TransactionPin);
 
-                if (response.ResponseCode == "03")
+                if (response != null && response.ResponseCode == "03")
                 {
+                    TempData["error"] = "Invalid account number or pin";
                     ModelState.AddModelError(string.Empty, "Invalid account number or pin");
                     return View();
                 }
-                else if (response.ResponseCode == "05")
-                {
-                    ModelState.AddModelError(string.Empty, "Insufficient balance for transfer");
-                    return View();
-                }
-                else if (response.ResponseCode == "06")
-                {
-                    ModelState.AddModelError(string.Empty, "Transfer must not exceed 200,000");
-                    return View();
-                }
 
-                else if (response != null)
+                else if (response != null && response.ResponseCode == "00")
                 {
                     TempData["success"] = "Transfer successful";
                     return RedirectToAction("TransactionIndex");
                 }
                 else
                 {
-
-                    ModelState.AddModelError(string.Empty, "Failed to make a transfer.");
+                    TempData["error"] = "Failed to make a transfer.";
+                    ModelState.AddModelError(string.Empty, "Check the pin, account number or if the amount exceeds 200000.");
                     return View();
                 }
             }catch (Exception ex)
             {
                 if (ex.Message.Contains("Transfer amount should not be within the certain range"))
                 {
+                    TempData["error"] = "Transfer amount should not be within the transfer range";
                     ModelState.AddModelError("Transfer", "Transfer amount should not be within the transfer range");
                     return BadRequest(ModelState);
                 }
                 else
                 {
+                    TempData["error"] = "An error occurred while Transferring";
                     ModelState.AddModelError(string.Empty, "An error occurred while Transferring");
                 }
                 return View();
@@ -168,32 +156,23 @@ namespace BankApp.Controllers
             {
                 Response response = _service.MakeWithdrawal(AccountNumber, Amount, TransactionPin);
 
-                if (response.ResponseCode == "03")
+                if (response != null && response.ResponseCode == "03")
                 {
+                    TempData["error"] = "Invalid account number or pin";
                     ModelState.AddModelError(string.Empty, "Invalid account number or pin");
                     return View();
                 }
-                else if (response.ResponseCode == "05")
-                {
-                    //return BadRequest("Insufficient balance for withdrawal");
-                    ModelState.AddModelError(string.Empty, "Insufficient balance for withdrawal");
-                    return View();
-                }
-                else if (response.ResponseCode == "06")
-                {
-                    ModelState.AddModelError(string.Empty, "Withdrawal must not exceed 200,000");
-                    return View();
-                }
+                
 
-                else if (response != null)
+                else if (response != null && response.ResponseCode == "00")
                 {
                     TempData["success"] = "Withdraw successful";
                     return RedirectToAction("TransactionIndex");
                 }
                 else
                 {
-
-                    ModelState.AddModelError(string.Empty, "Failed to make a withdrawal.");
+                    TempData["error"] = "Failed to make a withdrawal.";
+                    ModelState.AddModelError(string.Empty, "Check the pin, account number or if the amount exceeds 200000.");
                     return View();
                 }
 
@@ -201,12 +180,14 @@ namespace BankApp.Controllers
             {
                 if (ex.Message.Contains("Withdrawal amount should not be within the certain range"))
                 {
+                    TempData["error"] = "Withdrawal amount should not be within the withdraw range";
                     ModelState.AddModelError("Withdrawal", "Withdrawal amount should not be within the withdraw range");
                     return BadRequest(ModelState);
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "An error occurred while withdrawaing");
+                    TempData["error"] = "An error occurred while withdrawaing";
+                    ModelState.AddModelError(string.Empty, "An error occurred while withdrawing");
                 }
                 return View();
             }

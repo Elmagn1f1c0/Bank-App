@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using BankApp.DTO;
-using BankApp.Models;
-using BankApp.Services.Interface;
+using BankApp.Data.DTO;
+using BankApp.Data.Models;
+using BankApp.Core.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

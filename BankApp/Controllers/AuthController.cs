@@ -1,14 +1,14 @@
 ﻿using BankApp.Data;
 using BankApp.Data.Static;
-using BankApp.DTO;
-using Books.Models;
+using BankApp.Data.DTO;
+using BankApp.Data.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using BankApp.Services.Interface;
+using BankApp.Core.Services.Interface;
 
 namespace BankApp.Controllers
 {

@@ -1,23 +1,24 @@
-﻿@using BankApp.DTO;
-@model PaginatedList<Transaction>
+﻿@model PaginatedList<Transaction>
 
 
-
-    <br />
-    <div class="container p-4 border">
-        <div class="row pb-2">
-            <div class="col">
-                <h1 class="text-primary">Transaction List</h1>
+<br />
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient m-lg-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="text-dark py-2">Transaction List</h1>
             </div>
-            <div class="col text-end pt-1">
-                
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row pb-3">
+            <div class="col-12 text-end">
                 <a asp-controller="Transaction" asp-action="MakeDeposit" class="btn btn-outline-primary"><i class="bi bi-plus-square-fill"></i>Deposit</a>
                 <a asp-controller="Transaction" asp-action="MakeTransfer" class="btn btn-outline-primary"><i class="bi bi-plus-square-fill"></i>Transfer</a>
                 <a asp-controller="Transaction" asp-action="MakeWithdrawal" class="btn btn-outline-primary"><i class="bi bi-plus-square-fill"></i>Withdrawal</a>
-                
             </div>
         </div>
-    <table class="table table-custom">
+        <table class="table table-custom">
             <thead>
                 <tr>
                     <th>
@@ -74,7 +75,7 @@
                     <tr>
                         <td colspan="8">
                             <nav aria-label="Transaction navigation">
-                            <ul class="pagination pagination-custom justify-content-center">
+                                <ul class="pagination pagination-custom justify-content-center">
                                     @for (var i = 1; i <= Model.TotalPages; i++)
                                     {
                                         <li class="page-item @(i == Model.PageNumber ? "active" : "")">
@@ -89,61 +90,5 @@
             }
         </table>
     </div>
-<style>
-    body {
-        background: linear-gradient(to bottom right, #f0f8ff, #e0f5ff);
-        background-color: #f0f8ff;
-    }
-    table.table-custom {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-    }
-
-        table.table-custom th,
-        table.table-custom td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        table.table-custom th {
-            background-color: #f2f2f2;
-            color: #333;
-        }
-
-        table.table-custom tbody tr:hover {
-            background-color: #f5f5f5;
-        }
-    .pagination-custom {
-        margin-top: 20px;
-    }
-
-        .pagination-custom .page-item {
-            display: inline-block;
-            margin-right: 5px;
-        }
-
-        .pagination-custom .page-link {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            color: #333;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-
-            .pagination-custom .page-link:hover {
-                background-color: #f2f2f2;
-            }
-
-        .pagination-custom .active .page-link {
-            background-color: #007bff;
-            color: #fff;
-            border-color: #007bff;
-        }
-</style>
-
-   
-
+</div>
 

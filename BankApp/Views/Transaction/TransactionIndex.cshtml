@@ -11,13 +11,18 @@
         </div>
     </div>
     <div class="card-body p-4">
-        <div class="row pb-3">
-            <div class="col-12 text-end">
+        <ul class="navbar-nav flex-grow-1 text-end">
+        <li class="nav-item dropdown parentcont">
+            <a class="nav-link dropdown-toggle" style="color:black" id="btnDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 TRANSACTION
+            </a>
+                <div id="hide-drop-down" style="display: none; position: relative;">
                 <a asp-controller="Transaction" asp-action="MakeDeposit" class="btn btn-outline-primary"><i class="bi bi-plus-square-fill"></i>Deposit</a>
                 <a asp-controller="Transaction" asp-action="MakeTransfer" class="btn btn-outline-primary"><i class="bi bi-plus-square-fill"></i>Transfer</a>
                 <a asp-controller="Transaction" asp-action="MakeWithdrawal" class="btn btn-outline-primary"><i class="bi bi-plus-square-fill"></i>Withdrawal</a>
             </div>
-        </div>
+        </li>
+        </ul>
         <table class="table table-custom">
             <thead>
                 <tr>
@@ -26,22 +31,6 @@
                     </th>
                     <th>
                         Transaction Amount
-                    </th>
-                    <th>
-                        Transaction Source Account
-                    </th>
-                    <th>
-                        Transaction Type
-                    </th>
-                    <th>
-                        Transaction Status
-                    </th>
-                    <th>
-
-                        Transaction Destination Amount
-                    </th>
-                    <th>
-                        Transaction Date
                     </th>
 
                     <th>
@@ -57,13 +46,11 @@
                         <tr>
                             <td>@item.TransactionUniqueReference</td>
                             <td>@item.TransactionAmount</td>
-                            <td>@item.TransactionSourceAccount</td>
-                            <td>@item.TransactionType</td>
-                            <td>@item.TransactionStatus</td>
-                            <td>@item.TransactionDestinationAccount</td>
-                            <td>@item.TransactionDate</td>
+                            
                             <td>
-                                <a asp-controller="Transaction" asp-action="DeleteTransaction" asp-route-Id="@item.Id" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
+                                <a class="btn btn-outline-primary float-right" asp-action="TransactionDetails" asp-route-id="@item.Id">
+                                    <i class="bi bi-eye-fill"></i> Show Details
+                                </a>
                             </td>
                         </tr>
                     }

@@ -39,6 +39,11 @@ namespace BankApp.Controllers
                 return View(emptyList);
             }
         }
+        public async Task<IActionResult> TransactionDetails(int id)
+        {
+            var transactionDetail = await _service.GetById(id);
+            return View(transactionDetail);
+        }
         public IActionResult MakeDeposit()
         {
 

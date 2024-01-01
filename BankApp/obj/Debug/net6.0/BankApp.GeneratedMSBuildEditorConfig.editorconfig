@@ -16,6 +16,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\hp\Desktop\Bank Project - Copy\BankApp\BankApp
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/hp/Desktop/Bank Project - Copy/BankApp/BankApp/Views/Account/AccountDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxBY2NvdW50RGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/hp/Desktop/Bank Project - Copy/BankApp/BankApp/Views/Account/AccountIndex.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxBY2NvdW50SW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

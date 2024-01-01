@@ -95,6 +95,11 @@ namespace BankApp.Controllers
 
             return View("AccountIndex", new PaginatedList<GetAccountModel>(new List<GetAccountModel>(), 0, 1, 1));
         }
+        public async Task<IActionResult> AccountDetails(int id)
+        {
+            var accountDetail = await _service.GetById(id);
+            return View(accountDetail);
+        }
 
         public IActionResult CreateAccount()
         {

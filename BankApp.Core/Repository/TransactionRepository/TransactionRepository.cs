@@ -40,8 +40,6 @@ namespace BankApp.Core.Repository.TransactionRepository
 
         }
 
-
-
         public Response FindTransactionByDate(DateTime date)
         {
             Response response = new Response();

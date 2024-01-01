@@ -29,11 +29,8 @@
                             <tr>
                                 <th>First Name</th>
                                 <th>Last Name</th>
-                                <th>Account Type</th>
-                                <th>Phone Number</th>
-                                <th>Email</th>
                                 <th>Account Number</th>
-                                <th>Account Balance</th>
+                                
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -45,14 +42,11 @@
                                     <tr>
                                         <td>@item.FirstName</td>
                                         <td>@item.LastName</td>
-                                        <td>@item.AccountType</td>
-                                        <td>@item.PhoneNumber</td>
-                                        <td>@item.Email</td>
                                         <td>@item.AccountNumberGenerated</td>
-                                        <td>@item.CurrentAccountBalance</td>
                                         <td>
-                                            <a asp-controller="Account" asp-action="UpdateAccount" asp-route-Id="@item.Id" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
-                                            <a asp-controller="Account" asp-action="DeleteAccount" asp-route-Id="@item.Id" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
+                                            <a class="btn btn-outline-primary float-right" asp-action="AccountDetails" asp-route-id="@item.Id">
+                                                <i class="bi bi-eye-fill"></i> Show Details
+                                            </a>
                                         </td>
                                     </tr>
                                 }

@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-ygbVcJHOG/cfQl16jb6pWUzOf5v0GK9BBOI8Iz3RiPFAxKm4U8BjQ2MO55r5IMZ7" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
 </head>
-<body>
+<body class ="light-mode">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -31,12 +31,18 @@
                                 <a class="nav-link dropdown-toggle" id="btnDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="bi bi-gear"></i> Banking
                                 </a>
-                                <div id="hide-drop-down">
+                                <div id="hide-drop-down" style="color:black">
                                     <a class="dropdown-item" asp-controller="Account" asp-action="AccountIndex"><i class="bi bi-person-circle"></i> Account</a>
                                     <a class="dropdown-item" asp-controller="Transaction" asp-action="TransactionIndex"><i class="bi bi-cash"></i> Transaction</a>
                                 </div>
+                                
                             </li>
+                            
                         </ul>
+                        <label class="switch">
+                            <input type="checkbox" id="mode-toggle">
+                            <span class="slider"></span>
+                        </label>
                         <form class="form" asp-controller="Account" asp-action="Search">
                             <div class="d-flex justify-content-end">
                                 <input name="searchString" type="text" class="search" placeholder="Search for an account..." aria-label="Recipient's username" aria-describedby="button-addon2">
@@ -70,6 +76,65 @@
         .parentcont {
             position: relative
         }
+
+        .light-mode {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .dark-mode {
+            background-color: #222222;
+            color: #ffffff;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin-left: auto;
+            padding-bottom: 0.5rem;
+            padding-top: 0.9rem;
+            margin-right: 1rem;
+        }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                transition: .4s;
+                border-radius: 50%;
+            }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+            input:checked + .slider:before {
+                transform: translateX(26px);
+            }
     </style>
     <script>
         var getClickBtn = document.getElementById("btnDrop");
@@ -80,6 +145,7 @@
             if (element.style.display == 'none') {
 
                 element.style.display = "block";
+
 
             } else {
 
@@ -97,6 +163,37 @@
                 event.preventDefault();
                 hideDropdown.style.display = (hideDropdown.style.display === 'block') ? 'none' : 'block';
             });
+        });
+        function setModeFromStorage() {
+            const mode = localStorage.getItem('mode');
+            const page = document.querySelector('body');
+
+            if (mode === 'dark') {
+                page.classList.add('dark-mode');
+                page.classList.remove('light-mode');
+                document.getElementById('mode-toggle').checked = true;
+            } else {
+                page.classList.add('light-mode');
+                page.classList.remove('dark-mode');
+                document.getElementById('mode-toggle').checked = false;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', setModeFromStorage);
+        const modeToggle = document.getElementById('mode-toggle');
+        const page = document.querySelector('body');
+
+        modeToggle.addEventListener('change', function () {
+            if (modeToggle.checked) {
+                page.classList.add('dark-mode');
+                page.classList.remove('light-mode');
+                localStorage.setItem('mode', 'dark');
+            } else {
+                page.classList.add('light-mode');
+                page.classList.remove('dark-mode');
+                localStorage.setItem('mode', 'light');
+            }
+        
         });
     </script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -22,7 +22,36 @@ namespace BankApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("BankApp.Models.Account", b =>
+            modelBuilder.Entity("BankApp.Data.DTO.EmailTemplate", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Purpose")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmailTemplates");
+                });
+
+            modelBuilder.Entity("BankApp.Data.Models.Account", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -79,8 +108,8 @@ namespace BankApp.Migrations
                             AccountNumberGenerated = "9053769810",
                             AccountType = 3,
                             CurrentAccountBalance = "999999999",
-                            DateCreated = new DateTime(2023, 12, 16, 4, 9, 17, 14, DateTimeKind.Local).AddTicks(4376),
-                            DateLastUpdated = new DateTime(2023, 12, 16, 4, 9, 17, 14, DateTimeKind.Local).AddTicks(4390),
+                            DateCreated = new DateTime(2024, 1, 3, 5, 27, 22, 338, DateTimeKind.Local).AddTicks(8403),
+                            DateLastUpdated = new DateTime(2024, 1, 3, 5, 27, 22, 338, DateTimeKind.Local).AddTicks(8416),
                             Email = "settlement@youbank.com",
                             FirstName = "YouBank",
                             LastName = "settlement Account",
@@ -88,45 +117,7 @@ namespace BankApp.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BankApp.Models.Transaction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<decimal>("TransactionAmount")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("TransactionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TransactionDestinationAccount")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TransactionParticulars")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TransactionSourceAccount")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TransactionStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TransactionType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TransactionUniqueReference")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Transaction");
-                });
-
-            modelBuilder.Entity("Books.Models.ApplicationUser", b =>
+            modelBuilder.Entity("BankApp.Data.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -147,6 +138,9 @@ namespace BankApp.Migrations
 
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsEmailVerified")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -192,6 +186,44 @@ namespace BankApp.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("BankApp.Data.Models.Transaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<decimal>("TransactionAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TransactionDestinationAccount")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TransactionParticulars")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TransactionSourceAccount")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TransactionStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TransactionUniqueReference")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Transaction");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -338,7 +370,7 @@ namespace BankApp.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Books.Models.ApplicationUser", null)
+                    b.HasOne("BankApp.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -347,7 +379,7 @@ namespace BankApp.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Books.Models.ApplicationUser", null)
+                    b.HasOne("BankApp.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -362,7 +394,7 @@ namespace BankApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Books.Models.ApplicationUser", null)
+                    b.HasOne("BankApp.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -371,7 +403,7 @@ namespace BankApp.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Books.Models.ApplicationUser", null)
+                    b.HasOne("BankApp.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

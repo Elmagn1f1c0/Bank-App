@@ -15,5 +15,8 @@ namespace BankApp.Data.DTO
         public List<string> ErrorMessages { get; set; }
 
         public object Result { get; set; }
+        public string Message { get; set; }
+        public string Token { get; set; }
+        public DateTime Expiration { get; set; }
     }
 }

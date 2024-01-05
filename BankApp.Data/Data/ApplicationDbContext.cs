@@ -1,4 +1,5 @@
-﻿using BankApp.Data.Enums;
+﻿using BankApp.Data.DTO;
+using BankApp.Data.Enums;
 using BankApp.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ namespace BankApp.Data
         
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Transaction>()

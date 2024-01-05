@@ -3,6 +3,7 @@ using BankApp.Data.DTO;
 using BankApp.Data.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace BankApp.Core.Services.Implementation
 {
@@ -11,13 +12,16 @@ namespace BankApp.Core.Services.Implementation
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration _configuration;
 
-        public AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IHttpContextAccessor httpContextAccessor)
+        public AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IHttpContextAccessor httpContextAccessor,IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _httpContextAccessor = httpContextAccessor;
+            _configuration = configuration;
         }
+
         public async Task<ResponseDto<string>> ExternalLogin(string email, string firstName, string surname)
         {
             var response = new ResponseDto<string>();
@@ -67,5 +71,7 @@ namespace BankApp.Core.Services.Implementation
             }
             return response;
         }
+
+       
     }
 }

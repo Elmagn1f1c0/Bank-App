@@ -48,6 +48,7 @@ namespace BankApp.Controllers
                 Email = registerVM.Email,
                 UserName = registerVM.Email
             };
+
             var newUserResponse = await _userManager.CreateAsync(newUser, registerVM.Password);
 
             if (newUserResponse.Succeeded)

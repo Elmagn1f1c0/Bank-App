@@ -4,6 +4,7 @@ using BankApp.Data.Models;
 using BankApp.Core.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using BankApp.Core.Services.Implementation;
 
 namespace BankApp.Controllers
 {
@@ -12,6 +13,7 @@ namespace BankApp.Controllers
     {
         private readonly ITransactionService _service;
         IMapper _mapper;
+        protected Response _response;
         private const int PageSize = 5;
 
         public TransactionController(ITransactionService service, IMapper mapper)
@@ -44,6 +46,33 @@ namespace BankApp.Controllers
             var transactionDetail = await _service.GetById(id);
             return View(transactionDetail);
         }
+
+        public IActionResult SearchTransactions(string searchString = null, DateTime? searchDate = null)
+        {
+            var transactionsResponse = _service.GetAll();
+
+            if (transactionsResponse.ResponseCode == "00" && transactionsResponse.Data is List<Transaction> transactions)
+            {
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    transactions = transactions.Where(t =>
+                        t.TransactionUniqueReference.Contains(searchString)).ToList();
+                }
+
+                if (searchDate != null)
+                {
+                    transactions = transactions.Where(t =>
+                        t.TransactionDate.Date == searchDate.Value.Date).ToList();
+                }
+
+                return View("TransactionIndex");
+            }
+            else
+            {
+                return View(new List<Transaction>());
+            }
+        }
+
         public IActionResult MakeDeposit()
         {
 

@@ -1,5 +1,4 @@
-﻿using BankApp.Data.DTO;
-using BankApp.Data.Enums;
+﻿using BankApp.Data.Enums;
 using BankApp.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -20,9 +19,7 @@ namespace BankApp.Data
         {
             modelBuilder.Entity<Transaction>()
                 .Property(t => t.TransactionAmount)
-                .HasPrecision(18, 2); 
-
-            // Other configurations...
+                .HasPrecision(18, 2);
 
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Account>().HasData(

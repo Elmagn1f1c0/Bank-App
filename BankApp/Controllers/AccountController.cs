@@ -103,7 +103,6 @@ namespace BankApp.Controllers
 
         public IActionResult CreateAccount()
         {
-
             return View();
         }
         [HttpPost]
@@ -156,9 +155,11 @@ namespace BankApp.Controllers
             {
                 return NotFound(); 
             }
-            UpdateAccountModel updateModel = new UpdateAccountModel
+            UpdateAccountModel updateModel = new()
             {
                 Id = account.Id,
+                FirstName = account.FirstName,
+                LastName = account.LastName,
                 PhoneNumber = account.PhoneNumber,
                 Email = account.Email,
                 Pin = string.Empty,
@@ -212,7 +213,7 @@ namespace BankApp.Controllers
             {
                 return NotFound();
             }
-            AccountDTO updateModel = new AccountDTO
+            AccountDTO updateModel = new()
             {
                 Id = account.Id,
                 FirstName = account.FirstName,  

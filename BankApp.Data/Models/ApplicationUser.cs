@@ -7,7 +7,6 @@ namespace BankApp.Data.Models
     {
         [Display(Name = "Full name")]
         public string FullName { get; set; }
-        [Display(Name = "Email verified")]
-        public bool IsEmailVerified { get; set; }
+       
     }
 }

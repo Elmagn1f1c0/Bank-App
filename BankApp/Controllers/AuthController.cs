@@ -1,5 +1,4 @@
 ﻿using BankApp.Data;
-using BankApp.Data.Static;
 using BankApp.Data.DTO;
 using BankApp.Data.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -16,14 +15,12 @@ namespace BankApp.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ApplicationDbContext _context;
         private readonly IAuthService _authService;
 
-        public AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context, IAuthService authService)
+        public AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IAuthService authService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _context = context;
             _authService = authService;
         }
         
@@ -46,7 +43,6 @@ namespace BankApp.Controllers
             {
                 FullName = registerVM.Name,
                 Email = registerVM.Email,
-                UserName = registerVM.Email
             };
 
             var newUserResponse = await _userManager.CreateAsync(newUser, registerVM.Password);

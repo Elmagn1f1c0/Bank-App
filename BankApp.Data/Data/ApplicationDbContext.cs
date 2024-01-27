@@ -37,5 +37,6 @@ namespace BankApp.Data
                     DateLastUpdated = DateTime.Now,
                 });
         }
+
     }
 }

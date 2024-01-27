@@ -1,5 +1,4 @@
-﻿using BankApp.Data;
-using BankApp.Data.DTO;
+﻿using BankApp.Data.DTO;
 using BankApp.Data.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;

@@ -169,6 +169,7 @@ namespace BankApp.Controllers
 
             return View(updateModel); 
         }
+
         [HttpPost]
         public async Task<IActionResult> UpdateAccount(UpdateAccountModel model)
         {
@@ -213,7 +214,7 @@ namespace BankApp.Controllers
             {
                 return NotFound();
             }
-            AccountDTO updateModel = new()
+            AccountDTO deleteModel = new()
             {
                 Id = account.Id,
                 FirstName = account.FirstName,  
@@ -226,7 +227,7 @@ namespace BankApp.Controllers
                 DateLastUpdated = account.DateLastUpdated
             };
 
-            return View(updateModel);
+            return View(deleteModel);
         }
 
 

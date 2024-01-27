@@ -5,6 +5,7 @@ using BankApp.Core.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using BankApp.Core.Services.Implementation;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BankApp.Controllers
 {
@@ -41,6 +42,37 @@ namespace BankApp.Controllers
                 return View(emptyList);
             }
         }
+        public IActionResult Search(string searchString, int page = 1)
+        {
+            var transactionsResponse = _service.GetAll();
+
+            if (transactionsResponse.ResponseCode == "00" && transactionsResponse.Data is List<Transaction> transactions)
+            {
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    transactions = transactions.Where(t =>
+                        t.TransactionUniqueReference.Contains(searchString) ||
+                        t.TransactionAmount.ToString().Contains(searchString) ||
+                        t.TransactionSourceAccount.ToString().Contains(searchString) ||
+                        t.TransactionDestinationAccount.ToString().Contains(searchString) ||
+                        t.TransactionAmount.ToString().Contains(searchString) ||
+                        t.TransactionType.ToString().Contains(searchString)).ToList();
+                }
+
+                var paginatedTransactions = transactions
+                    .Skip((page - 1) * PageSize)
+                    .Take(PageSize)
+                    .ToList();
+
+                var model = new PaginatedList<Transaction>(paginatedTransactions, transactions.Count, page, PageSize);
+                return View("TransactionIndex", model);
+            }
+            else
+            {
+                return View(new List<Transaction>());
+            }
+        }
+
         public async Task<IActionResult> TransactionDetails(int id)
         {
             var transactionDetail = await _service.GetById(id);
